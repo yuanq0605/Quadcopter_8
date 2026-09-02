@@ -1,0 +1,24 @@
+--cpu=Cortex-M4.fp.sp
+"quadcopter\startup_stm32f401xe.o"
+"quadcopter\main.o"
+"quadcopter\gpio.o"
+"quadcopter\stm32f4xx_it.o"
+"quadcopter\stm32f4xx_hal_msp.o"
+"quadcopter\stm32f4xx_hal_rcc.o"
+"quadcopter\stm32f4xx_hal_rcc_ex.o"
+"quadcopter\stm32f4xx_hal_flash.o"
+"quadcopter\stm32f4xx_hal_flash_ex.o"
+"quadcopter\stm32f4xx_hal_flash_ramfunc.o"
+"quadcopter\stm32f4xx_hal_gpio.o"
+"quadcopter\stm32f4xx_hal_dma_ex.o"
+"quadcopter\stm32f4xx_hal_dma.o"
+"quadcopter\stm32f4xx_hal_pwr.o"
+"quadcopter\stm32f4xx_hal_pwr_ex.o"
+"quadcopter\stm32f4xx_hal_cortex.o"
+"quadcopter\stm32f4xx_hal.o"
+"quadcopter\stm32f4xx_hal_exti.o"
+"quadcopter\system_stm32f4xx.o"
+--strict --scatter "quadcopter\quadcopter.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "quadcopter.map" -o quadcopter\quadcopter.axf
