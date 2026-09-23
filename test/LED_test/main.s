@@ -1,23 +1,6 @@
-	PRESERVE8
-	THUMB
-
 	AREA RESET, DATA, READONLY	; 开启向量表段
 	DCD 0x20018000	; 填写栈顶地址（STM32F401RE的SRAM顶端）
 	DCD Reset_Handler	; 复位处理函数标签
-	DCD Fault_Handler	; NMI异常
-	DCD Fault_Handler	; HardFault硬件错误
-	DCD Fault_Handler	; MemManage
-	DCD Fault_Handler	; BusFault
-	DCD Fault_Handler	; UsageFault
-	DCD 0				; 保留，填0
-	DCD 0				;
-	DCD 0				;
-	DCD 0				;
-	DCD Fault_Handler	; SVC
-	DCD Fault_Handler	; DebugMon
-	DCD 0				; 保留
-	DCD Fault_Handler	; PendSV
-	DCD Fault_Handler	; SysTick系统滴答定时器异常
 		
 	AREA CODE_SEG, CODE, READONLY	; 开启程序代码段
 	EXPORT Reset_Handler	; 对外暴露Reset_Handler标签，让向量表可以引用该符号
@@ -74,9 +57,6 @@ delay_inner	; 循环内部标签
 		CMP		R2, #0	; 判断R2是否为0，将条件标志位置为R2 - 0
 		BNE		delay_inner	; 若条件标志位不为0则跳转至delay_inner
 		BX		LR	; 跳转回主循环
-		
-Fault_Handler	; 异常处理标签
-	B	Fault_Handler	; 无条件跳转至Fault_Handler，形成死循环
 	
 	END
 	
