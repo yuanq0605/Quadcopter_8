@@ -1,0 +1,740 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 9em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://D:\Users\Public\Documents\Altium\ADAgile\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">2026/10/9</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">17:03:23</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:06</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc" class="file"><acronym title="D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc">D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">76</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">32</td></tr>
+</table>
+</td>
+</table><a name="IDBYDMC0CNTOUWIKXD1UEM5UVBHMD4HEQFGF4FFLHFO5OGC1QFODM"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDCFHUI40F0N00DNQRDHMA4KCZ4GLDVHLRB0513QJ0KW3K2CJOHAFO">Drilled SMT Pads found</a></td>
+<td class="column2">76</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">76</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDXB0CXHMAIRRSDXE4WMIJB2QECGAYI5AP13FXP3FBVNE0LBO0EJQB">Clearance Constraint (Gap=0.2mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDGY0LAMCWB1VCOA4FHVQIOVVS1NEYQNOGOVAHMWIANKDWVJUN2BS">Clearance Constraint (Gap=0.25mm) (InNet('GND')),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDE22WFVPJXPAME2BITL3IMVWHJNKUC4CHRLENTNCW53C4G0KVGXIH">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDUBJRPWOC2NAOLEJLHFFMHIA0DNNMNB5RZGLLIF2IOYDJU1TT1UE">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDFEMSJ5R3HK2VJIPIOQ2DEC3SMN5QN4YZ3BQVH5PGGRZMJQRZR5MM">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDSOX1U2GI1UNJDAVFUT4MXN2GQHJOJRCQCTYYMPKF3XWAUXPHI5XO">Width Constraint (Min=0.2mm) (Max=0.4mm) (Preferred=0.2mm) (InNetClass('INF'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDWVYPMPALO3COHNSQAMRUG3YOYNJTNCVDQJFOSPN1A1UEC1I2GCXO">Width Constraint (Min=0.254mm) (Max=0.254mm) (Preferred=0.254mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDQNILULUJ4QH3CXFEAFUAW0MAUKCKGLI0MS2U2VBBBGVR1Z1GHSUJ">Width Constraint (Min=0.2mm) (Max=2mm) (Preferred=0.8mm) (InNetClass('PWR'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDHDSUJNH2RX4YNYGC11KEOWMT4KWTCHIPQALXQXPILXSQDCXUMHFM">Width Constraint (Min=0.2mm) (Max=0.4mm) (Preferred=0.2mm) (InNetClass('PWM'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDV2D3JDSTZJABHFUKMRQFS5PVYJLUXRPLSUC0PWMSTAOSDNV3IWDF">Routing Topology Rule(Topology=Shortest) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID3FPX1HLVOPDWESFKPWH1DSJPDHFLX5VY0MH035FIGGMYFXQ2DMMC">Routing Layers(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID50NWZEOPBDKLGWEBQ4WMK1D5HMFIKOCAHD1IYGNTK0ZCLQBJTGO">Routing Via (MinHoleWidth=0.3mm) (MaxHoleWidth=0.8mm) (PreferredHoleWidth=0.3mm) (MinWidth=0.5mm) (MaxWidth=1mm) (PreferedWidth=0.6mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID2SCVGUGFYUPQIVTWJ0SZR2HGJGHROYJSG2ZQIXOVLRCKAGFWSXFM">Differential Pairs Uncoupled Length using the Gap Constraints (Min=0.254mm) (Max=0.254mm) (Prefered=0.254mm)  and Width Constraints (Min=0.381mm) (Max=0.381mm) (Prefered=0.381mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDT3DXQ2MDP0K0PMAE10CVQNLMLISMD3SLP2UG30FZMAMDHWSST2QC">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID5MZ1NDIVSZHNIURHIOSAN5ASCPJPQI2PMPF5UCOY5OR3NW5ZWV1C">Fabrication Testpoint Style (Under Component=Yes) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDT5D0TUGNNT0BJ0MS4C0QC3NADGYGYNTCRC2GF2HZIMZTNZZTRROE">Fabrication Testpoint Usage (Valid =One Required, Allow multiple per net=No) (All)</a></td>
+<td class="column2">14</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDUXC1TMB1EDSFMJVTO4UB3NLFMDV4JO0G2STQTIF4S4JODU5IIJMC">Assembly Testpoint Style (Under Component=Yes) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDSGRBGI3FLTJWKUZTJ0WE50BDOE1XW3MTQY1MRM20DBNQ4VVKM3B">Assembly Testpoint Usage (Valid =One Required, Allow multiple per net=No) (All)</a></td>
+<td class="column2">14</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLM3MUTBXVFS435DYEZ3TUOKFILKGJ5YMH21XUHLK3LF45CXGCVG">Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDVXYT43IQXVDPPVGDDMJ3N3M4EN2ZZNM0E2H3N4QPBSHS3ZGZRSD">Pads and Vias to follow the Drill pairs settings</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDS5BHKPZXVMBWIKD1LYWILFM0QOVDSPYITBODT0FJOVBSCRYAVRHC">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID34VYANASNXDTF3FSZNYRC5NNRNMINXXGAJ5R1PJNY3BHAOBG5R5J">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDOC4PRBPAVLEMG1HZ2UMVZQXOHFYGFJMC2BHIYAER4400AOIM5DIG">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID4XWZEM1M3IBFKH1SF1AFR0UR4H4YXFIQJ4RIPYDASOCEFBMAGKVM">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDJLR0PTHVN50FKC0SA3RB4OE4HFFZRDEP1IRXR0YPPI1MA5JTRUJ">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDBEL14VI2JJXLNG2P352D10J2KKLWWLZTPSKOYCC3IFOPCGUDSRTI">Component Clearance Constraint ( Horizontal Gap = 0.254mm, Vertical Gap = 0.254mm ) (All),(All) </a></td>
+<td class="column2">2</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDWKU1HBKDW2TRHEAPZRFSCE4TJFPLROXOLSYSHBK5O1USRQKRSRPP">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDY5V1ZDK221LVNKRQCDGXTWCWOMOBQGVVQMZH2KFAAS4WHGPC44QH">Supply Net(s)(InNet('+3V3'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDOE0AEDRHYO2VPXQBOCLKHVFBFJ4RQGOY1LBRWSME3KFOFSMYGWZM">Supply Net(s)(InNet('+5'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID0TIWQMUU2MUOLAKJCZGVJHVW1FNHZDOJNGVO2CMZ5YZK0OOEHXEO">Supply Net(s)(InNet('GND'))</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">32</td>
+</tr>
+</table><br><a name="ID15YS4N1412KRJNINTQJXL5EVMM5YJE2O2EZUQGHRNO2ZW5K3WZ2N"><h2>Warnings</h2></a><a name="IDCFHUI40F0N00DNQRDHMA4KCZ4GLDVHLRB0513QJ0KW3K2CJOHAFO"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="warning">Drilled SMT Pads found</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3725.437mil|Location2.Y=3760.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3725.437mil|Location2.Y=3760.933mil|Absolute=True">Pad P1-1(33.116mm,54.691mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3725.437mil|Location2.Y=3760.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3725.437mil|Location2.Y=3760.933mil|Absolute=True">Pad P1-2(39.116mm,54.691mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3625.437mil|Location2.Y=3660.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3625.437mil|Location2.Y=3660.933mil|Absolute=True">Pad P1-3(33.116mm,52.151mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3625.437mil|Location2.Y=3660.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3625.437mil|Location2.Y=3660.933mil|Absolute=True">Pad P1-4(39.116mm,52.151mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3525.437mil|Location2.Y=3560.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3525.437mil|Location2.Y=3560.933mil|Absolute=True">Pad P1-5(33.116mm,49.611mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3525.437mil|Location2.Y=3560.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3525.437mil|Location2.Y=3560.933mil|Absolute=True">Pad P1-6(39.116mm,49.611mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3425.437mil|Location2.Y=3460.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3425.437mil|Location2.Y=3460.933mil|Absolute=True">Pad P1-7(33.116mm,47.071mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3425.437mil|Location2.Y=3460.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3425.437mil|Location2.Y=3460.933mil|Absolute=True">Pad P1-8(39.116mm,47.071mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3325.437mil|Location2.Y=3360.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3325.437mil|Location2.Y=3360.933mil|Absolute=True">Pad P1-9(33.116mm,44.531mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3325.437mil|Location2.Y=3360.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3325.437mil|Location2.Y=3360.933mil|Absolute=True">Pad P1-10(39.116mm,44.531mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3225.437mil|Location2.Y=3260.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3225.437mil|Location2.Y=3260.933mil|Absolute=True">Pad P1-11(33.116mm,41.991mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3225.437mil|Location2.Y=3260.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3225.437mil|Location2.Y=3260.933mil|Absolute=True">Pad P1-12(39.116mm,41.991mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3125.437mil|Location2.Y=3160.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3125.437mil|Location2.Y=3160.933mil|Absolute=True">Pad P1-13(33.116mm,39.451mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3125.437mil|Location2.Y=3160.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3125.437mil|Location2.Y=3160.933mil|Absolute=True">Pad P1-14(39.116mm,39.451mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3025.437mil|Location2.Y=3060.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=3025.437mil|Location2.Y=3060.933mil|Absolute=True">Pad P1-15(33.116mm,36.911mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3025.437mil|Location2.Y=3060.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=3025.437mil|Location2.Y=3060.933mil|Absolute=True">Pad P1-16(39.116mm,36.911mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2925.437mil|Location2.Y=2960.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2925.437mil|Location2.Y=2960.933mil|Absolute=True">Pad P1-17(33.116mm,34.371mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2925.437mil|Location2.Y=2960.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2925.437mil|Location2.Y=2960.933mil|Absolute=True">Pad P1-18(39.116mm,34.371mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2825.437mil|Location2.Y=2860.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2825.437mil|Location2.Y=2860.933mil|Absolute=True">Pad P1-19(33.116mm,31.831mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2825.437mil|Location2.Y=2860.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2825.437mil|Location2.Y=2860.933mil|Absolute=True">Pad P1-20(39.116mm,31.831mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2725.437mil|Location2.Y=2760.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2725.437mil|Location2.Y=2760.933mil|Absolute=True">Pad P1-21(33.116mm,29.291mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2725.437mil|Location2.Y=2760.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2725.437mil|Location2.Y=2760.933mil|Absolute=True">Pad P1-22(39.116mm,29.291mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2625.437mil|Location2.Y=2660.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2625.437mil|Location2.Y=2660.933mil|Absolute=True">Pad P1-23(33.116mm,26.751mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2625.437mil|Location2.Y=2660.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2625.437mil|Location2.Y=2660.933mil|Absolute=True">Pad P1-24(39.116mm,26.751mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2525.437mil|Location2.Y=2560.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2525.437mil|Location2.Y=2560.933mil|Absolute=True">Pad P1-25(33.116mm,24.211mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2525.437mil|Location2.Y=2560.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2525.437mil|Location2.Y=2560.933mil|Absolute=True">Pad P1-26(39.116mm,24.211mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2425.437mil|Location2.Y=2460.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2425.437mil|Location2.Y=2460.933mil|Absolute=True">Pad P1-27(33.116mm,21.671mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2425.437mil|Location2.Y=2460.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2425.437mil|Location2.Y=2460.933mil|Absolute=True">Pad P1-28(39.116mm,21.671mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2325.437mil|Location2.Y=2360.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2325.437mil|Location2.Y=2360.933mil|Absolute=True">Pad P1-29(33.116mm,19.131mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2325.437mil|Location2.Y=2360.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2325.437mil|Location2.Y=2360.933mil|Absolute=True">Pad P1-30(39.116mm,19.131mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2225.437mil|Location2.Y=2260.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2225.437mil|Location2.Y=2260.933mil|Absolute=True">Pad P1-31(33.116mm,16.591mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2225.437mil|Location2.Y=2260.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2225.437mil|Location2.Y=2260.933mil|Absolute=True">Pad P1-32(39.116mm,16.591mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2125.437mil|Location2.Y=2160.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2125.437mil|Location2.Y=2160.933mil|Absolute=True">Pad P1-33(33.116mm,14.051mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2125.437mil|Location2.Y=2160.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2125.437mil|Location2.Y=2160.933mil|Absolute=True">Pad P1-34(39.116mm,14.051mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2025.437mil|Location2.Y=2060.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=2025.437mil|Location2.Y=2060.933mil|Absolute=True">Pad P1-35(33.116mm,11.511mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2025.437mil|Location2.Y=2060.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=2025.437mil|Location2.Y=2060.933mil|Absolute=True">Pad P1-36(39.116mm,11.511mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=1925.437mil|Location2.Y=1960.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2712.411mil|Location2.X=2795.151mil|Location1.Y=1925.437mil|Location2.Y=1960.933mil|Absolute=True">Pad P1-37(33.116mm,8.971mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=1925.437mil|Location2.Y=1960.933mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2948.631mil|Location2.X=3031.371mil|Location1.Y=1925.437mil|Location2.Y=1960.933mil|Absolute=True">Pad P1-38(39.116mm,8.971mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3723.867mil|Location2.Y=3759.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3723.867mil|Location2.Y=3759.363mil|Absolute=True">Pad P1-73(91.916mm,54.651mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3723.867mil|Location2.Y=3759.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3723.867mil|Location2.Y=3759.363mil|Absolute=True">Pad P1-74(97.916mm,54.651mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3623.867mil|Location2.Y=3659.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3623.867mil|Location2.Y=3659.363mil|Absolute=True">Pad P1-75(91.916mm,52.111mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3623.867mil|Location2.Y=3659.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3623.867mil|Location2.Y=3659.363mil|Absolute=True">Pad P1-76(97.916mm,52.111mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3523.867mil|Location2.Y=3559.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3523.867mil|Location2.Y=3559.363mil|Absolute=True">Pad P1-77(91.916mm,49.571mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3523.867mil|Location2.Y=3559.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3523.867mil|Location2.Y=3559.363mil|Absolute=True">Pad P1-78(97.916mm,49.571mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3423.867mil|Location2.Y=3459.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3423.867mil|Location2.Y=3459.363mil|Absolute=True">Pad P1-79(91.916mm,47.031mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3423.867mil|Location2.Y=3459.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3423.867mil|Location2.Y=3459.363mil|Absolute=True">Pad P1-80(97.916mm,47.031mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3323.867mil|Location2.Y=3359.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3323.867mil|Location2.Y=3359.363mil|Absolute=True">Pad P1-81(91.916mm,44.491mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3323.867mil|Location2.Y=3359.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3323.867mil|Location2.Y=3359.363mil|Absolute=True">Pad P1-82(97.916mm,44.491mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3223.867mil|Location2.Y=3259.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3223.867mil|Location2.Y=3259.363mil|Absolute=True">Pad P1-83(91.916mm,41.951mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3223.867mil|Location2.Y=3259.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3223.867mil|Location2.Y=3259.363mil|Absolute=True">Pad P1-84(97.916mm,41.951mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3123.867mil|Location2.Y=3159.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3123.867mil|Location2.Y=3159.363mil|Absolute=True">Pad P1-85(91.916mm,39.411mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3123.867mil|Location2.Y=3159.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3123.867mil|Location2.Y=3159.363mil|Absolute=True">Pad P1-86(97.916mm,39.411mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3023.867mil|Location2.Y=3059.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=3023.867mil|Location2.Y=3059.363mil|Absolute=True">Pad P1-87(91.916mm,36.871mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3023.867mil|Location2.Y=3059.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=3023.867mil|Location2.Y=3059.363mil|Absolute=True">Pad P1-88(97.916mm,36.871mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2923.867mil|Location2.Y=2959.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2923.867mil|Location2.Y=2959.363mil|Absolute=True">Pad P1-89(91.916mm,34.331mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2923.867mil|Location2.Y=2959.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2923.867mil|Location2.Y=2959.363mil|Absolute=True">Pad P1-90(97.916mm,34.331mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2823.867mil|Location2.Y=2859.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2823.867mil|Location2.Y=2859.363mil|Absolute=True">Pad P1-91(91.916mm,31.791mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2823.867mil|Location2.Y=2859.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2823.867mil|Location2.Y=2859.363mil|Absolute=True">Pad P1-92(97.916mm,31.791mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2723.867mil|Location2.Y=2759.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2723.867mil|Location2.Y=2759.363mil|Absolute=True">Pad P1-93(91.916mm,29.251mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2723.867mil|Location2.Y=2759.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2723.867mil|Location2.Y=2759.363mil|Absolute=True">Pad P1-94(97.916mm,29.251mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2623.867mil|Location2.Y=2659.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2623.867mil|Location2.Y=2659.363mil|Absolute=True">Pad P1-95(91.916mm,26.711mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2623.867mil|Location2.Y=2659.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2623.867mil|Location2.Y=2659.363mil|Absolute=True">Pad P1-96(97.916mm,26.711mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2523.867mil|Location2.Y=2559.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2523.867mil|Location2.Y=2559.363mil|Absolute=True">Pad P1-97(91.916mm,24.171mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2523.867mil|Location2.Y=2559.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2523.867mil|Location2.Y=2559.363mil|Absolute=True">Pad P1-98(97.916mm,24.171mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2423.867mil|Location2.Y=2459.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2423.867mil|Location2.Y=2459.363mil|Absolute=True">Pad P1-99(91.916mm,21.631mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2423.867mil|Location2.Y=2459.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2423.867mil|Location2.Y=2459.363mil|Absolute=True">Pad P1-100(97.916mm,21.631mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2323.867mil|Location2.Y=2359.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2323.867mil|Location2.Y=2359.363mil|Absolute=True">Pad P1-101(91.916mm,19.091mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2323.867mil|Location2.Y=2359.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2323.867mil|Location2.Y=2359.363mil|Absolute=True">Pad P1-102(97.916mm,19.091mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2223.867mil|Location2.Y=2259.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2223.867mil|Location2.Y=2259.363mil|Absolute=True">Pad P1-103(91.916mm,16.551mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2223.867mil|Location2.Y=2259.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2223.867mil|Location2.Y=2259.363mil|Absolute=True">Pad P1-104(97.916mm,16.551mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2123.867mil|Location2.Y=2159.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2123.867mil|Location2.Y=2159.363mil|Absolute=True">Pad P1-105(91.916mm,14.011mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2123.867mil|Location2.Y=2159.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2123.867mil|Location2.Y=2159.363mil|Absolute=True">Pad P1-106(97.916mm,14.011mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2023.867mil|Location2.Y=2059.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=2023.867mil|Location2.Y=2059.363mil|Absolute=True">Pad P1-107(91.916mm,11.471mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2023.867mil|Location2.Y=2059.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=2023.867mil|Location2.Y=2059.363mil|Absolute=True">Pad P1-108(97.916mm,11.471mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=1923.867mil|Location2.Y=1959.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5027.365mil|Location2.X=5110.105mil|Location1.Y=1923.867mil|Location2.Y=1959.363mil|Absolute=True">Pad P1-109(91.916mm,8.931mm) on Top Layer</acronym></a></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=1923.867mil|Location2.Y=1959.363mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5263.585mil|Location2.X=5346.325mil|Location1.Y=1923.867mil|Location2.Y=1959.363mil|Absolute=True">Pad P1-110(97.916mm,8.931mm) on Top Layer</acronym></a></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a href="dxpprocess://PCB:RunConvertDrilledSMTPadsToMultilayer?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;" class="callback"><acronym title="dxpprocess://PCB:RunConvertDrilledSMTPadsToMultilayer?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;">Convert Found Drilled SMT Pads to MultiLayer Pads</acronym></a><a name="IDT5D0TUGNNT0BJ0MS4C0QC3NADGYGYNTCRC2GF2HZIMZTNZZTRROE"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Fabrication Testpoint Usage (Valid =One Required, Allow multiple per net=No) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1335.284mil|Location2.X=3420.339mil|Location1.Y=2004.973mil|Location2.Y=4090.028mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1335.284mil|Location2.X=3420.339mil|Location1.Y=2004.973mil|Location2.Y=4090.028mil|Absolute=True">Fabrication Testpoint Usage: Net +3V3 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=6092.248mil|Location1.Y=2156.052mil|Location2.Y=5321.169mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=6092.248mil|Location1.Y=2156.052mil|Location2.Y=5321.169mil|Absolute=True">Fabrication Testpoint Usage: Net +5 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1834.973mil|Location2.X=5956.5mil|Location1.Y=1312.02mil|Location2.Y=5433.547mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1834.973mil|Location2.X=5956.5mil|Location1.Y=1312.02mil|Location2.Y=5433.547mil|Absolute=True">Fabrication Testpoint Usage: Net GND - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4893.553mil|Location2.X=6031.686mil|Location1.Y=2902.367mil|Location2.Y=4040.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4893.553mil|Location2.X=6031.686mil|Location1.Y=2902.367mil|Location2.Y=4040.5mil|Absolute=True">Fabrication Testpoint Usage: Net I2C1_SCL - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4840.626mil|Location2.X=5785.5mil|Location1.Y=3248.997mil|Location2.Y=4193.87mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4840.626mil|Location2.X=5785.5mil|Location1.Y=3248.997mil|Location2.Y=4193.87mil|Absolute=True">Fabrication Testpoint Usage: Net I2C1_SDA - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2034.973mil|Location2.X=5131.605mil|Location1.Y=1792.554mil|Location2.Y=4889.187mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2034.973mil|Location2.X=5131.605mil|Location1.Y=1792.554mil|Location2.Y=4889.187mil|Absolute=True">Fabrication Testpoint Usage: Net I2C2_SCL - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2134.972mil|Location2.X=5131.605mil|Location1.Y=1647.881mil|Location2.Y=4644.513mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2134.972mil|Location2.X=5131.605mil|Location1.Y=1647.881mil|Location2.Y=4644.513mil|Absolute=True">Fabrication Testpoint Usage: Net I2C2_SDA - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3102.367mil|Location2.Y=4875.185mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3102.367mil|Location2.Y=4875.185mil|Absolute=True">Fabrication Testpoint Usage: Net TIM3_CH1 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3002.367mil|Location2.Y=4775.185mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3002.367mil|Location2.Y=4775.185mil|Absolute=True">Fabrication Testpoint Usage: Net TIM3_CH2 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=3961.996mil|Location1.Y=1549.38mil|Location2.Y=2584.245mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=3961.996mil|Location1.Y=1549.38mil|Location2.Y=2584.245mil|Absolute=True">Fabrication Testpoint Usage: Net TIM3_CH3 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3848.004mil|Location2.X=5367.825mil|Location1.Y=1495.834mil|Location2.Y=3015.655mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3848.004mil|Location2.X=5367.825mil|Location1.Y=1495.834mil|Location2.Y=3015.655mil|Absolute=True">Fabrication Testpoint Usage: Net TIM3_CH4 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5131.605mil|Location1.Y=630.381mil|Location2.Y=3787.013mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5131.605mil|Location1.Y=630.381mil|Location2.Y=3787.013mil|Absolute=True">Fabrication Testpoint Usage: Net USART1_RX - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5164.374mil|Location1.Y=886.044mil|Location2.Y=4075.445mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5164.374mil|Location1.Y=886.044mil|Location2.Y=4075.445mil|Absolute=True">Fabrication Testpoint Usage: Net USART1_TX - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5005.865mil|Location2.X=5915.027mil|Location1.Y=1605.745mil|Location2.Y=2514.908mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5005.865mil|Location2.X=5915.027mil|Location1.Y=1605.745mil|Location2.Y=2514.908mil|Absolute=True">Fabrication Testpoint Usage: Net USART2_RX - Missing required testpoint</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDSGRBGI3FLTJWKUZTJ0WE50BDOE1XW3MTQY1MRM20DBNQ4VVKM3B"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Assembly Testpoint Usage (Valid =One Required, Allow multiple per net=No) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1335.284mil|Location2.X=3420.339mil|Location1.Y=2004.973mil|Location2.Y=4090.028mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1335.284mil|Location2.X=3420.339mil|Location1.Y=2004.973mil|Location2.Y=4090.028mil|Absolute=True">Assembly Testpoint Usage: Net +3V3 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=6092.248mil|Location1.Y=2156.052mil|Location2.Y=5321.169mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=6092.248mil|Location1.Y=2156.052mil|Location2.Y=5321.169mil|Absolute=True">Assembly Testpoint Usage: Net +5 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1834.973mil|Location2.X=5956.5mil|Location1.Y=1312.02mil|Location2.Y=5433.547mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1834.973mil|Location2.X=5956.5mil|Location1.Y=1312.02mil|Location2.Y=5433.547mil|Absolute=True">Assembly Testpoint Usage: Net GND - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4893.553mil|Location2.X=6031.686mil|Location1.Y=2902.367mil|Location2.Y=4040.5mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4893.553mil|Location2.X=6031.686mil|Location1.Y=2902.367mil|Location2.Y=4040.5mil|Absolute=True">Assembly Testpoint Usage: Net I2C1_SCL - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4840.626mil|Location2.X=5785.5mil|Location1.Y=3248.997mil|Location2.Y=4193.87mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4840.626mil|Location2.X=5785.5mil|Location1.Y=3248.997mil|Location2.Y=4193.87mil|Absolute=True">Assembly Testpoint Usage: Net I2C1_SDA - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2034.973mil|Location2.X=5131.605mil|Location1.Y=1792.554mil|Location2.Y=4889.187mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2034.973mil|Location2.X=5131.605mil|Location1.Y=1792.554mil|Location2.Y=4889.187mil|Absolute=True">Assembly Testpoint Usage: Net I2C2_SCL - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2134.972mil|Location2.X=5131.605mil|Location1.Y=1647.881mil|Location2.Y=4644.513mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2134.972mil|Location2.X=5131.605mil|Location1.Y=1647.881mil|Location2.Y=4644.513mil|Absolute=True">Assembly Testpoint Usage: Net I2C2_SDA - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3102.367mil|Location2.Y=4875.185mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3102.367mil|Location2.Y=4875.185mil|Absolute=True">Assembly Testpoint Usage: Net TIM3_CH1 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3002.367mil|Location2.Y=4775.185mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3703.396mil|Location2.X=5476.213mil|Location1.Y=3002.367mil|Location2.Y=4775.185mil|Absolute=True">Assembly Testpoint Usage: Net TIM3_CH2 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=3961.996mil|Location1.Y=1549.38mil|Location2.Y=2584.245mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2927.131mil|Location2.X=3961.996mil|Location1.Y=1549.38mil|Location2.Y=2584.245mil|Absolute=True">Assembly Testpoint Usage: Net TIM3_CH3 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3848.004mil|Location2.X=5367.825mil|Location1.Y=1495.834mil|Location2.Y=3015.655mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3848.004mil|Location2.X=5367.825mil|Location1.Y=1495.834mil|Location2.Y=3015.655mil|Absolute=True">Assembly Testpoint Usage: Net TIM3_CH4 - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5131.605mil|Location1.Y=630.381mil|Location2.Y=3787.013mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5131.605mil|Location1.Y=630.381mil|Location2.Y=3787.013mil|Absolute=True">Assembly Testpoint Usage: Net USART1_RX - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5164.374mil|Location1.Y=886.044mil|Location2.Y=4075.445mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1974.973mil|Location2.X=5164.374mil|Location1.Y=886.044mil|Location2.Y=4075.445mil|Absolute=True">Assembly Testpoint Usage: Net USART1_TX - Missing required testpoint</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5005.865mil|Location2.X=5915.027mil|Location1.Y=1605.745mil|Location2.Y=2514.908mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5005.865mil|Location2.X=5915.027mil|Location1.Y=1605.745mil|Location2.Y=2514.908mil|Absolute=True">Assembly Testpoint Usage: Net USART2_RX - Missing required testpoint</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID4XWZEM1M3IBFKH1SF1AFR0UR4H4YXFIQJ4RIPYDASOCEFBMAGKVM"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk to Silk (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3996.923mil|Location2.X=4008.173mil|Location1.Y=4653.682mil|Location2.Y=4664.932mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3996.923mil|Location2.X=4008.173mil|Location1.Y=4653.682mil|Location2.Y=4664.932mil|Absolute=True">Silk To Silk Clearance Constraint: (0.251mm &lt; 0.254mm) Between Text "+5V" (63.754mm,76.708mm) on Top Overlay And Track (61.087mm,78.186mm)(68.707mm,78.186mm) on Top Overlay Silk Text to Silk Clearance [0.251mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1954.37mil|Location2.X=1965.62mil|Location1.Y=4086.343mil|Location2.Y=4097.593mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1954.37mil|Location2.X=1965.62mil|Location1.Y=4086.343mil|Location2.Y=4097.593mil|Absolute=True">Silk To Silk Clearance Constraint: (0.154mm &lt; 0.254mm) Between Text "3V3" (12.573mm,63.754mm) on Top Overlay And Track (9.906mm,63.373mm)(20.066mm,63.373mm) on Top Overlay Silk Text to Silk Clearance [0.154mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDBEL14VI2JJXLNG2P352D10J2KKLWWLZTPSKOYCC3IFOPCGUDSRTI"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Component Clearance Constraint ( Horizontal Gap = 0.254mm, Vertical Gap = 0.254mm ) (All),(All) </th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4087.906mil|Location2.X=4095.572mil|Location1.Y=4666.975mil|Location2.Y=4674.642mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4087.906mil|Location2.X=4095.572mil|Location1.Y=4666.975mil|Location2.Y=4674.642mil|Absolute=True">Component Clearance Constraint: (Collision &lt; 0.254mm) Between Component P1-NUCLEO-64 (100.316mm,86.691mm) on Top Layer And DIP Component P3-PWM (64.897mm,80.726mm) on Top Layer </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4091.103mil|Location2.X=4098.769mil|Location1.Y=2048.904mil|Location2.Y=2056.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=D:\STM32Project\Quadcopter_8\PCB\AD\AD.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4091.103mil|Location2.X=4098.769mil|Location1.Y=2048.904mil|Location2.Y=2056.57mil|Absolute=True">Component Clearance Constraint: (Collision &lt; 0.254mm) Between Component P1-NUCLEO-64 (100.316mm,86.691mm) on Top Layer And DIP Component P4-PWM (64.897mm,9.352mm) on Top Layer </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

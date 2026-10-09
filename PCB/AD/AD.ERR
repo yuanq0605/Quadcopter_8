@@ -1,5 +1,10 @@
-Component Rule Check Report for : D:\STM32Project\Quadcopter_8\PCB\AD\AD.SchLib
+Altium Designer System: Library Component Rule Check
+PCB File : AD
+Date     : 2026/10/7
+Time     : 9:31:13
 
 
-Name                Errors
+Name                Warnings
 ------------------------------------------------------------------
+NUCLEO-F103RB            Duplicate Primitives: Track (82.5mm,-23.2mm)(82.5mm,-23mm) on Top Overlay And Track (82.5mm,-23.2mm)(82.5mm,-23mm) on Top Overlay
+
