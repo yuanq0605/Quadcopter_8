@@ -1,0 +1,27 @@
+--cpu Cortex-M3
+"motortest\startup_stm32f103xb.o"
+"motortest\main.o"
+"motortest\gpio.o"
+"motortest\tim.o"
+"motortest\usart.o"
+"motortest\stm32f1xx_it.o"
+"motortest\stm32f1xx_hal_msp.o"
+"motortest\stm32f1xx_hal_gpio_ex.o"
+"motortest\stm32f1xx_hal_tim.o"
+"motortest\stm32f1xx_hal_tim_ex.o"
+"motortest\stm32f1xx_hal.o"
+"motortest\stm32f1xx_hal_rcc.o"
+"motortest\stm32f1xx_hal_rcc_ex.o"
+"motortest\stm32f1xx_hal_gpio.o"
+"motortest\stm32f1xx_hal_dma.o"
+"motortest\stm32f1xx_hal_cortex.o"
+"motortest\stm32f1xx_hal_pwr.o"
+"motortest\stm32f1xx_hal_flash.o"
+"motortest\stm32f1xx_hal_flash_ex.o"
+"motortest\stm32f1xx_hal_exti.o"
+"motortest\stm32f1xx_hal_uart.o"
+"motortest\system_stm32f1xx.o"
+--strict --scatter "MotorTest\MotorTest.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "MotorTest.map" -o MotorTest\MotorTest.axf
