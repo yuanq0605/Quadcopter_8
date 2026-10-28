@@ -1,0 +1,89 @@
+Added Component: Designator=G1(GY-86)
+Add component (AddParameter): Name = "AddInBom"; Value = "yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Channel ID"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Device"; Value = "GY-86"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "FootprintName"; Value = "GY-86"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Group ID"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reuse Block"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SupplierPart"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Symbol"; Value = "GY-86"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=H1(HDR1X6)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=O1(HDR1X4)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=P1(NUCLEO-F103RB)
+Add component (AddParameter): Name = "AddInBom"; Value = "yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Channel ID"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Device"; Value = "NUCLEO-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "FootprintName"; Value = "NUCLEO-F103RB"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Group ID"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "isSwitchClose"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "ST"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reuse Block"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Mouser"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SupplierPart"; Value = "NUCLEO-F103rb"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Symbol"; Value = "NUCLEO-64"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=P3(HDR2.54-WI-2x3P)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=P4(HDR2.54-WI-2x3P)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Component: Designator=P?(HDR1X3)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+5 Pin=G1-1
+Added Pin To Net: NetName=GND Pin=G1-3
+Added Pin To Net: NetName=I2C1_SCL Pin=G1-4
+Added Pin To Net: NetName=I2C1_SDA Pin=G1-5
+Added Pin To Net: NetName=+3V3 Pin=H1-2
+Added Pin To Net: NetName=GND Pin=H1-3
+Added Pin To Net: NetName=USART1_RX Pin=H1-4
+Added Pin To Net: NetName=USART1_TX Pin=H1-5
+Added Pin To Net: NetName=GND Pin=O1-1
+Added Pin To Net: NetName=+3V3 Pin=O1-2
+Added Pin To Net: NetName=I2C2_SCL Pin=O1-3
+Added Pin To Net: NetName=I2C2_SDA Pin=O1-4
+Added Pin To Net: NetName=+5 Pin=P1-6
+Added Pin To Net: NetName=+3V3 Pin=P1-16
+Added Pin To Net: NetName=TIM3_CH3 Pin=P1-34
+Added Pin To Net: NetName=I2C1_SDA Pin=P1-77
+Added Pin To Net: NetName=TIM3_CH1 Pin=P1-85
+Added Pin To Net: NetName=TIM3_CH2 Pin=P1-87
+Added Pin To Net: NetName=I2C1_SCL Pin=P1-89
+Added Pin To Net: NetName=USART1_TX Pin=P1-93
+Added Pin To Net: NetName=TIM3_CH4 Pin=P1-96
+Added Pin To Net: NetName=I2C2_SCL Pin=P1-97
+Added Pin To Net: NetName=I2C2_SDA Pin=P1-103
+Added Pin To Net: NetName=USART1_RX Pin=P1-105
+Added Pin To Net: NetName=USART2_RX Pin=P1-109
+Added Pin To Net: NetName=GND Pin=P3-1
+Added Pin To Net: NetName=GND Pin=P3-2
+Added Pin To Net: NetName=+5 Pin=P3-3
+Added Pin To Net: NetName=TIM3_CH1 Pin=P3-5
+Added Pin To Net: NetName=TIM3_CH2 Pin=P3-6
+Added Pin To Net: NetName=GND Pin=P4-1
+Added Pin To Net: NetName=GND Pin=P4-2
+Added Pin To Net: NetName=TIM3_CH3 Pin=P4-5
+Added Pin To Net: NetName=TIM3_CH4 Pin=P4-6
+Added Pin To Net: NetName=USART2_RX Pin=P?-1
+Added Pin To Net: NetName=+5 Pin=P?-2
+Added Pin To Net: NetName=GND Pin=P?-3
+Added Member To Class: ClassName=AD Member=Component G1 GY-86
+Added Member To Class: ClassName=AD Member=Component H1 HM-10
+Added Member To Class: ClassName=AD Member=Component O1 OLED
+Added Member To Class: ClassName=AD Member=Component P1 NUCLEO-64
+Added Member To Class: ClassName=AD Member=Component P3 PWM
+Added Member To Class: ClassName=AD Member=Component P4 PWM
+Added Member To Class: ClassName=AD Member=Component P? SBUSתTTL
