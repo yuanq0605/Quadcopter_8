@@ -1,0 +1,26 @@
+--cpu=Cortex-M4.fp.sp
+"f401_gy86\startup_stm32f401xe.o"
+"f401_gy86\main.o"
+"f401_gy86\stm32f4xx_it.o"
+"f401_gy86\stm32f4xx_hal_msp.o"
+"f401_gy86\stm32f4xx_hal_uart.o"
+"f401_gy86\stm32f4xx_hal_rcc.o"
+"f401_gy86\stm32f4xx_hal_rcc_ex.o"
+"f401_gy86\stm32f4xx_hal_flash.o"
+"f401_gy86\stm32f4xx_hal_flash_ex.o"
+"f401_gy86\stm32f4xx_hal_flash_ramfunc.o"
+"f401_gy86\stm32f4xx_hal_gpio.o"
+"f401_gy86\stm32f4xx_hal_dma_ex.o"
+"f401_gy86\stm32f4xx_hal_dma.o"
+"f401_gy86\stm32f4xx_hal_pwr.o"
+"f401_gy86\stm32f4xx_hal_pwr_ex.o"
+"f401_gy86\stm32f4xx_hal_cortex.o"
+"f401_gy86\stm32f4xx_hal.o"
+"f401_gy86\stm32f4xx_hal_exti.o"
+"f401_gy86\system_stm32f4xx.o"
+"f401_gy86\gy86.o"
+"f401_gy86\soft_i2c.o"
+--library_type=microlib --strict --scatter "F401_GY86\F401_GY86.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "F401_GY86.map" -o F401_GY86\F401_GY86.axf
