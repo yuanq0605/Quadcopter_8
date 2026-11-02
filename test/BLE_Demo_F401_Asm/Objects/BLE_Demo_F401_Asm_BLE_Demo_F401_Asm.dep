@@ -1,0 +1,4 @@
+Dependencies for Project 'BLE_Demo_F401_Asm', Target 'BLE_Demo_F401_Asm': (DO NOT MODIFY !)
+CompilerVersion: 5060528::V5.06 update 5 (build 528)::ARMCC
+F (.\startup_stm32f401xe.s)(0x6AE801DD)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -ID:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\3.1.1\Device\Include--pd "__UVISION_VERSION SETA 543" --pd "STM32F401xE SETA 1"--list .\startup_stm32f401xe.lst --xref -o objects\startup_stm32f401xe.o --depend objects\startup_stm32f401xe.d)
+F (.\main.s)(0x6AE801DD)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -ID:\Keil5\ARM\PACK\Keil\STM32F4xx_DFP\3.1.1\Device\Include--pd "__UVISION_VERSION SETA 543" --pd "STM32F401xE SETA 1"--list .\main.lst --xref -o objects\main.o --depend objects\main.d)

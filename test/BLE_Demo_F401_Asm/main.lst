@@ -1,0 +1,474 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             CODE_SEG, CODE, READONLY ; 开�
+                                                            ��程序代码段
+    2 00000000                 EXPORT           main        ; 对外暴露main�
+                                                            ��签
+    3 00000000                 EXPORT           USART1_IRQHandler ; 对外暴�
+                                                            �USART1中断函数
+                                                            
+    4 00000000         
+    5 00000000         main                                 ; 主程序入口�
+                                                            �签
+    6 00000000         
+    7 00000000         ;=======================开启GPIOA和USART1时钟======
+                       ==================
+    8 00000000 4843            LDR              R0, =0x40023830 ; 将RCC_AHB1EN
+                                                            R地址加载到R0
+    9 00000002 6801            LDR              R1, [R0]    ; 读取RCC_AHB1ENR
+                                                            的值
+   10 00000004 F041 0101       ORR              R1, R1, #1  ; 将bit0置1，使
+                                                            能GPIOA时钟
+   11 00000008 6001            STR              R1, [R0]    ; 将修改后的�
+                                                            �写回RCC_AHB1ENR
+   12 0000000A 4842            LDR              R0, =0x40023844 ; 将RCC_APB2EN
+                                                            R地址加载到R0
+   13 0000000C 6801            LDR              R1, [R0]    ; 读取RCC_APB2ENR
+                                                            的值
+   14 0000000E F041 0110       ORR              R1, R1, #(1 << 4) ; 将bit4置1
+                                                            ，使能USART1时�
+                                                            ��
+   15 00000012 6001            STR              R1, [R0]    ; 将修改后的�
+                                                            �写回RCC_APB2ENR
+   16 00000014         
+   17 00000014         ;=======================配置PA9和PA10为USART1=======
+                       =================
+   18 00000014 4840            LDR              R0, =0x40020000 ; 将GPIOA_MODE
+                                                            R地址加载到R0
+   19 00000016 6801            LDR              R1, [R0]    ; 读取GPIOA_MODER
+                                                            的值
+   20 00000018 F421 2140       AND              R1, R1, #(~(0x3 << 18)) ; 清�
+                                                            �PA9模式位
+   21 0000001C F421 1140       AND              R1, R1, #(~(0x3 << 20)) ; 清�
+                                                            �PA10模式位
+   22 00000020 F441 2100       ORR              R1, R1, #(0x2 << 18) ; PA9设�
+                                                            �为复用功能模
+                                                            式
+   23 00000024 F441 1100       ORR              R1, R1, #(0x2 << 20) ; PA10设�
+                                                            ��为复用功能�
+                                                            �式
+   24 00000028 6001            STR              R1, [R0]    ; 将修改后的�
+                                                            �写回GPIOA_MODER
+   25 0000002A 483C            LDR              R0, =0x4002000C ; 将GPIOA_PUPD
+                                                            R地址加载到R0
+   26 0000002C 6801            LDR              R1, [R0]    ; 读取GPIOA_PUPDR
+                                                            的值
+   27 0000002E F421 2140       AND              R1, R1, #(~(0x3 << 18)) ; 清�
+                                                            �PA9上下拉配置
+                                                            
+   28 00000032 F421 1140       AND              R1, R1, #(~(0x3 << 20)) ; 清�
+                                                            �PA10上下拉配�
+                                                            �
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   29 00000036 F441 1180       ORR              R1, R1, #(0x1 << 20) ; PA10设�
+                                                            ��为上拉输入
+   30 0000003A 6001            STR              R1, [R0]    ; 将修改后的�
+                                                            �写回GPIOA_PUPDR
+   31 0000003C 4838            LDR              R0, =0x40020024 ; 将GPIOA_AFRH
+                                                            地址加载到R0
+   32 0000003E 6801            LDR              R1, [R0]    ; 读取GPIOA_AFRH�
+                                                            ��值
+   33 00000040 F021 01F0       AND              R1, R1, #(~(0xF << 4)) ; 清除
+                                                            PA9的复用功能�
+                                                            ��择位
+   34 00000044 F421 6170       AND              R1, R1, #(~(0xF << 8)) ; 清除
+                                                            PA10的复用功能
+                                                            选择位
+   35 00000048 F041 0170       ORR              R1, R1, #(0x7 << 4) ; PA9选择
+                                                            AF7，即USART1_TX
+   36 0000004C F441 61E0       ORR              R1, R1, #(0x7 << 8) ; PA10选�
+                                                            �AF7，即USART1_RX
+                                                            
+   37 00000050 6001            STR              R1, [R0]    ; 将修改后的�
+                                                            �写回GPIOA_AFRH
+   38 00000052         
+   39 00000052         ;==========================配置USART1=================
+                       ==============
+   40 00000052 4834            LDR              R0, =0x40011008 ; 将USART1_BRR
+                                                            地址加载到R0
+   41 00000054 F240 6183       LDR              R1, =0x0683 ; 16MHz时钟下960
+                                                            0波特率的BRR值
+                                                            
+   42 00000058 6001            STR              R1, [R0]    ; 将BRR值写入US
+                                                            ART1_BRR
+   43 0000005A 4833            LDR              R0, =0x4001100C ; 将USART1_CR1
+                                                            地址加载到R0
+   44 0000005C F242 012C       LDR              R1, =0x202C ; 使能USART、收
+                                                            发器和RXNE接收
+                                                            中断
+   45 00000060 6001            STR              R1, [R0]    ; 将配置值写�
+                                                            �USART1_CR1
+   46 00000062 4832            LDR              R0, =0xE000E104 ; 将NVIC_ISER1
+                                                            地址加载到R0
+   47 00000064 F04F 0120       LDR              R1, =(1 << 5) ; USART1中断号
+                                                            37对应ISER1的bit
+                                                            5
+   48 00000068 6001            STR              R1, [R0]    ; 使能USART1中�
+                                                            �
+   49 0000006A         
+   50 0000006A         ;==========================初始化浮点数据========
+                       ====================
+   51 0000006A F04F 4040       LDR              R0, =0xC0000000 ; 将-2.0f的IE
+                                                            EE-754编码加载�
+                                                            ��R0
+   52 0000006E EE00 0A10       VMOV             S0, R0      ; 将R0中的浮点
+                                                            编码复制到S0
+   53 00000072         
+   54 00000072         ;============================主循环==================
+                       =============
+   55 00000072         main_loop                            ; 主循环标签
+   56 00000072 F000 F80A       BL               send_float  ; 发送当前S0中
+                                                            的浮点数据
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   57 00000076 482E            LDR              R0, =0x3DCCCCCD ; 将+0.1f的IE
+                                                            EE-754编码加载�
+                                                            ��R0
+   58 00000078 EE00 0A90       VMOV             S1, R0      ; 将R0中的浮点
+                                                            编码复制到S1
+   59 0000007C EE30 0A20       VADD.F32         S0, S0, S1  ; S0 = S0 + 0.1f
+   60 00000080 F45F 70FA       MOVS             R0, #500    ; R0设置为500，
+                                                            准备延时500ms
+   61 00000084 F000 F829       BL               delay_sub   ; 跳转至延时�
+                                                            �程序
+   62 00000088 E7F3            B                main_loop   ; 跳转回主循�
+                                                            �
+   63 0000008A         
+   64 0000008A         ;============================发送子程序============
+                       =================
+   65 0000008A         send_float                           ; BLE浮点数据�
+                                                            �送子程序标签
+                                                            
+   66 0000008A B5F0            PUSH             {R4-R7, LR} ; 保存本子程�
+                                                            �使用的寄存器
+                                                            和返回地址
+   67 0000008C 4C29            LDR              R4, =packet ; 将数据包缓�
+                                                            �区地址加载到
+                                                            R4
+   68 0000008E 25AA            MOVS             R5, #0xAA   ; 设置数据包�
+                                                            �头
+   69 00000090 7025            STRB             R5, [R4]    ; 将帧头写入pa
+                                                            cket[0]
+   70 00000092 EE10 5A10       VMOV             R5, S0      ; 将S0的32位浮�
+                                                            ��编码复制到R5
+                                                            
+   71 00000096 7065            STRB             R5, [R4, #1] ; 写入浮点数�
+                                                            ��低字节
+   72 00000098 EA4F 2615       LSR              R6, R5, #8  ; 将浮点数右�
+                                                            �8位
+   73 0000009C 70A6            STRB             R6, [R4, #2] ; 写入浮点数�
+                                                            ��2字节
+   74 0000009E EA4F 4615       LSR              R6, R5, #16 ; 将浮点数右�
+                                                            �16位
+   75 000000A2 70E6            STRB             R6, [R4, #3] ; 写入浮点数�
+                                                            ��3字节
+   76 000000A4 EA4F 6615       LSR              R6, R5, #24 ; 将浮点数右�
+                                                            �24位
+   77 000000A8 7126            STRB             R6, [R4, #4] ; 写入浮点数�
+                                                            ��高字节
+   78 000000AA 7865            LDRB             R5, [R4, #1] ; 读取第1个浮
+                                                            点数字节
+   79 000000AC 78A6            LDRB             R6, [R4, #2] ; 读取第2个浮
+                                                            点数字节
+   80 000000AE EA85 0506       EOR              R5, R5, R6  ; 计算前两个�
+                                                            �节的异或
+   81 000000B2 78E6            LDRB             R6, [R4, #3] ; 读取第3个浮
+                                                            点数字节
+   82 000000B4 EA85 0506       EOR              R5, R5, R6  ; 将第3个字节�
+                                                            ��入异或结果
+   83 000000B8 7926            LDRB             R6, [R4, #4] ; 读取第4个浮
+                                                            点数字节
+   84 000000BA EA85 0506       EOR              R5, R5, R6  ; 将第4个字节�
+                                                            ��入异或结果
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+   85 000000BE 7165            STRB             R5, [R4, #5] ; 将校验结果�
+                                                            ��入packet[5]
+   86 000000C0         
+   87 000000C0 2700            MOVS             R7, #0      ; R7作为当前发
+                                                            送字节索引
+   88 000000C2         send_next                            ; 发送下一个�
+                                                            �节标签
+   89 000000C2 481D            LDR              R0, =0x40011000 ; 将USART1_SR�
+                                                            ��址加载到R0
+   90 000000C4         send_wait                            ; 等待发送数�
+                                                            �寄存器为空
+   91 000000C4 6801            LDR              R1, [R0]    ; 读取USART1_SR
+   92 000000C6 F011 0F80       TST              R1, #(1 << 7) ; 判断TXE标志
+                                                            是否为1
+   93 000000CA D0FB            BEQ              send_wait   ; TXE为0时继续�
+                                                            ��待
+   94 000000CC 5DE1            LDRB             R1, [R4, R7] ; 读取packet[R7]
+                                                            中的数据
+   95 000000CE 7101            STRB             R1, [R0, #4] ; 将数据写入U
+                                                            SART1_DR
+   96 000000D0 F107 0701       ADD              R7, R7, #1  ; 发送索引加1
+   97 000000D4 2F06            CMP              R7, #6      ; 判断6个字节�
+                                                            ��否发送完成
+   98 000000D6 D3F4            BLO              send_next   ; 未完成则发�
+                                                            �下一个字节
+   99 000000D8 BDF0            POP              {R4-R7, PC} ; 恢复寄存器�
+                                                            �返回主循环
+  100 000000DA         
+  101 000000DA         ;============================延时子程序============
+                       =================
+  102 000000DA         delay_sub                            ; 延时子程序�
+                                                            �签，R0为延时�
+                                                            ��秒数
+  103 000000DA 2800            CMP              R0, #0      ; 判断R0是否为
+                                                            0
+  104 000000DC D008            BEQ              delay_done  ; R0为0时直接�
+                                                            �回
+  105 000000DE         delay_outer                          ; 延时外层循�
+                                                            �标签
+  106 000000DE F44F 617A       LDR              R1, =4000   ; 设置1ms内层�
+                                                            �环计数器
+  107 000000E2         delay_inner                          ; 延时内层循�
+                                                            �标签
+  108 000000E2 F1A1 0101       SUB              R1, R1, #1  ; 计数器执行�
+                                                            �减操作
+  109 000000E6 2900            CMP              R1, #0      ; 判断R1是否为
+                                                            0
+  110 000000E8 D1FB            BNE              delay_inner ; R1不为0则继�
+                                                            �内层循环
+  111 000000EA F1A0 0001       SUB              R0, R0, #1  ; 已完成1ms，�
+                                                            �余毫秒数减1
+  112 000000EE D1F6            BNE              delay_outer ; R0不为0则继�
+                                                            �外层循环
+  113 000000F0         delay_done                           ; 延时完成标�
+                                                            �
+  114 000000F0 4770            BX               LR          ; 跳转回调用�
+                                                            �
+  115 000000F2         
+  116 000000F2         ;==========================USART1中断=================
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+                       ==============
+  117 000000F2         USART1_IRQHandler                    ; USART1中断服�
+                                                            �函数标签
+  118 000000F2 E92D 500F       PUSH             {R0-R3, R12, LR} ; 保存中断
+                                                            服务函数使用�
+                                                            ��寄存器
+  119 000000F6 4810            LDR              R0, =0x40011000 ; 将USART1_SR�
+                                                            ��址加载到R0
+  120 000000F8 6801            LDR              R1, [R0]    ; 读取USART1_SR
+  121 000000FA F011 0F20       TST              R1, #(1 << 5) ; 判断RXNE接�
+                                                            �非空标志是否
+                                                            为1
+  122 000000FE D000            BEQ              irq_done    ; RXNE为0时跳过
+                                                            接收处理
+  123 00000100 7902            LDRB             R2, [R0, #4] ; 读取USART1_DR�
+                                                            ��取得接收数�
+                                                            �
+  124 00000102         ; 读取DR后直接丢弃接收字节，不再控制LED
+  125 00000102         irq_done                             ; USART1中断结�
+                                                            �标签
+  126 00000102 F011 0F08       TST              R1, #(1 << 3) ; 判断是否发
+                                                            生接收溢出错�
+                                                            ��
+  127 00000106 D000            BEQ              irq_return  ; 没有溢出错�
+                                                            �时直接返回
+  128 00000108 7902            LDRB             R2, [R0, #4] ; 再次读取USAR
+                                                            T1_DR，清除残�
+                                                            �错误状态
+  129 0000010A         irq_return                           ; 中断返回标�
+                                                            �
+  130 0000010A E8BD 900F       POP              {R0-R3, R12, PC} ; 恢复现场
+                                                            并返回主程序
+  131 0000010E         
+  132 0000010E BF00            NOP                          ; 使代码段长�
+                                                            �对齐到4字节�
+                                                            �避免数据段前
+                                                            自动补齐
+  133 00000110 40023830 
+              40023844 
+              40020000 
+              4002000C 
+              40020024 
+              40011008 
+              4001100C 
+              E000E104 
+              3DCCCCCD 
+              00000000 
+              40011000         AREA             DATA_SEG, DATA, READWRITE, ALIG
+N=2 
+                                                            ; 开启数据段�
+                                                            �按4字节边界�
+                                                            �齐
+  134 00000000 00 00 00 
+              00 00 00 packet  SPACE            6           ; 分配6字节BLE�
+                                                            ��据包缓冲区
+  135 00000006         
+  136 00000006                 END
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
+interwork --depend=objects\main.d -oobjects\main.o -ID:\Keil5\ARM\PACK\Keil\STM
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+32F4xx_DFP\3.1.1\Device\Include --predefine="__UVISION_VERSION SETA 543" --pred
+efine="STM32F401xE SETA 1" --list=.\main.lst main.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+CODE_SEG 00000000
+
+Symbol: CODE_SEG
+   Definitions
+      At line 1 in file main.s
+   Uses
+      None
+Comment: CODE_SEG unused
+USART1_IRQHandler 000000F2
+
+Symbol: USART1_IRQHandler
+   Definitions
+      At line 117 in file main.s
+   Uses
+      At line 3 in file main.s
+Comment: USART1_IRQHandler used once
+delay_done 000000F0
+
+Symbol: delay_done
+   Definitions
+      At line 113 in file main.s
+   Uses
+      At line 104 in file main.s
+Comment: delay_done used once
+delay_inner 000000E2
+
+Symbol: delay_inner
+   Definitions
+      At line 107 in file main.s
+   Uses
+      At line 110 in file main.s
+Comment: delay_inner used once
+delay_outer 000000DE
+
+Symbol: delay_outer
+   Definitions
+      At line 105 in file main.s
+   Uses
+      At line 112 in file main.s
+Comment: delay_outer used once
+delay_sub 000000DA
+
+Symbol: delay_sub
+   Definitions
+      At line 102 in file main.s
+   Uses
+      At line 61 in file main.s
+Comment: delay_sub used once
+irq_done 00000102
+
+Symbol: irq_done
+   Definitions
+      At line 125 in file main.s
+   Uses
+      At line 122 in file main.s
+Comment: irq_done used once
+irq_return 0000010A
+
+Symbol: irq_return
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+   Definitions
+      At line 129 in file main.s
+   Uses
+      At line 127 in file main.s
+Comment: irq_return used once
+main 00000000
+
+Symbol: main
+   Definitions
+      At line 5 in file main.s
+   Uses
+      At line 2 in file main.s
+Comment: main used once
+main_loop 00000072
+
+Symbol: main_loop
+   Definitions
+      At line 55 in file main.s
+   Uses
+      At line 62 in file main.s
+Comment: main_loop used once
+send_float 0000008A
+
+Symbol: send_float
+   Definitions
+      At line 65 in file main.s
+   Uses
+      At line 56 in file main.s
+Comment: send_float used once
+send_next 000000C2
+
+Symbol: send_next
+   Definitions
+      At line 88 in file main.s
+   Uses
+      At line 98 in file main.s
+Comment: send_next used once
+send_wait 000000C4
+
+Symbol: send_wait
+   Definitions
+      At line 90 in file main.s
+   Uses
+      At line 93 in file main.s
+Comment: send_wait used once
+13 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DATA_SEG 00000000
+
+Symbol: DATA_SEG
+   Definitions
+      At line 133 in file main.s
+   Uses
+      None
+Comment: DATA_SEG unused
+packet 00000000
+
+Symbol: packet
+   Definitions
+      At line 134 in file main.s
+   Uses
+      At line 67 in file main.s
+Comment: packet used once
+2 symbols
+350 symbols in table
