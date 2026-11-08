@@ -1,85 +1,85 @@
 Protel Design System Design Rule Check
 PCB File : D:\STM32Project\Quadcopter_8\PCB\ZBL_V1.1\AD.PcbDoc
-Date     : 2026/11/6
-Time     : 16:41:15
+Date     : 2026/11/8
+Time     : 11:10:25
 
 WARNING: Drilled SMT Pads found
-   Pad P1-19(4.065mm,29.332mm) on Bottom Layer
-   Pad P1-34(10.065mm,11.552mm) on Bottom Layer
-   Pad P1-87(63.952mm,34.417mm) on Bottom Layer
-   Pad P1-105(63.952mm,11.557mm) on Bottom Layer
-   Pad P1-6(10.065mm,47.112mm) on Bottom Layer
-   Pad P1-103(63.952mm,14.097mm) on Bottom Layer
-   Pad P1-85(63.952mm,36.957mm) on Bottom Layer
-   Pad P1-96(69.952mm,24.257mm) on Bottom Layer
-   Pad P1-97(63.952mm,21.717mm) on Bottom Layer
-   Pad P1-16(10.065mm,34.412mm) on Bottom Layer
-   Pad P1-86(69.952mm,36.957mm) on Bottom Layer
-   Pad P1-84(69.952mm,39.497mm) on Bottom Layer
-   Pad P1-77(63.952mm,47.117mm) on Bottom Layer
-   Pad P1-89(63.952mm,31.877mm) on Bottom Layer
-   Pad P1-93(63.952mm,26.797mm) on Bottom Layer
-   Pad P1-1(4.065mm,52.192mm) on Bottom Layer
-   Pad P1-2(10.065mm,52.192mm) on Bottom Layer
-   Pad P1-3(4.065mm,49.652mm) on Bottom Layer
-   Pad P1-4(10.065mm,49.652mm) on Bottom Layer
-   Pad P1-5(4.065mm,47.112mm) on Bottom Layer
-   Pad P1-7(4.065mm,44.572mm) on Bottom Layer
-   Pad P1-8(10.065mm,44.572mm) on Bottom Layer
-   Pad P1-9(4.065mm,42.032mm) on Bottom Layer
-   Pad P1-10(10.065mm,42.032mm) on Bottom Layer
-   Pad P1-11(4.065mm,39.492mm) on Bottom Layer
-   Pad P1-12(10.065mm,39.492mm) on Bottom Layer
-   Pad P1-13(4.065mm,36.952mm) on Bottom Layer
-   Pad P1-14(10.065mm,36.952mm) on Bottom Layer
-   Pad P1-15(4.065mm,34.412mm) on Bottom Layer
-   Pad P1-17(4.065mm,31.872mm) on Bottom Layer
-   Pad P1-18(10.065mm,31.872mm) on Bottom Layer
-   Pad P1-20(10.065mm,29.332mm) on Bottom Layer
-   Pad P1-21(4.065mm,26.792mm) on Bottom Layer
-   Pad P1-22(10.065mm,26.792mm) on Bottom Layer
-   Pad P1-23(4.065mm,24.252mm) on Bottom Layer
-   Pad P1-24(10.065mm,24.252mm) on Bottom Layer
-   Pad P1-25(4.065mm,21.712mm) on Bottom Layer
-   Pad P1-26(10.065mm,21.712mm) on Bottom Layer
-   Pad P1-27(4.065mm,19.172mm) on Bottom Layer
-   Pad P1-28(10.065mm,19.172mm) on Bottom Layer
-   Pad P1-29(4.065mm,16.632mm) on Bottom Layer
-   Pad P1-30(10.065mm,16.632mm) on Bottom Layer
-   Pad P1-31(4.065mm,14.092mm) on Bottom Layer
-   Pad P1-32(10.065mm,14.092mm) on Bottom Layer
-   Pad P1-33(4.065mm,11.552mm) on Bottom Layer
-   Pad P1-35(4.065mm,9.012mm) on Bottom Layer
-   Pad P1-36(10.065mm,9.012mm) on Bottom Layer
-   Pad P1-37(4.065mm,6.472mm) on Bottom Layer
-   Pad P1-38(10.065mm,6.472mm) on Bottom Layer
-   Pad P1-75(63.952mm,49.657mm) on Bottom Layer
-   Pad P1-83(63.952mm,39.497mm) on Bottom Layer
-   Pad P1-101(63.952mm,16.637mm) on Bottom Layer
-   Pad P1-99(63.952mm,19.177mm) on Bottom Layer
-   Pad P1-95(63.952mm,24.257mm) on Bottom Layer
-   Pad P1-91(63.952mm,29.337mm) on Bottom Layer
-   Pad P1-81(63.952mm,42.037mm) on Bottom Layer
-   Pad P1-73(63.952mm,52.197mm) on Bottom Layer
-   Pad P1-110(69.952mm,6.477mm) on Bottom Layer
-   Pad P1-98(69.952mm,21.717mm) on Bottom Layer
-   Pad P1-108(69.952mm,9.017mm) on Bottom Layer
-   Pad P1-104(69.952mm,14.097mm) on Bottom Layer
-   Pad P1-102(69.952mm,16.637mm) on Bottom Layer
-   Pad P1-100(69.952mm,19.177mm) on Bottom Layer
-   Pad P1-106(69.952mm,11.557mm) on Bottom Layer
-   Pad P1-92(69.952mm,29.337mm) on Bottom Layer
-   Pad P1-90(69.952mm,31.877mm) on Bottom Layer
-   Pad P1-88(69.952mm,34.417mm) on Bottom Layer
-   Pad P1-82(69.952mm,42.037mm) on Bottom Layer
-   Pad P1-80(69.952mm,44.577mm) on Bottom Layer
-   Pad P1-78(69.952mm,47.117mm) on Bottom Layer
-   Pad P1-76(69.952mm,49.657mm) on Bottom Layer
-   Pad P1-74(69.952mm,52.197mm) on Bottom Layer
-   Pad P1-94(69.952mm,26.797mm) on Bottom Layer
-   Pad P1-107(63.952mm,9.017mm) on Bottom Layer
-   Pad P1-79(63.952mm,44.577mm) on Bottom Layer
-   Pad P1-109(63.952mm,6.477mm) on Bottom Layer
+   Pad P1-109(64.96mm,5.694mm) on Bottom Layer
+   Pad P1-79(64.96mm,43.794mm) on Bottom Layer
+   Pad P1-85(64.96mm,36.174mm) on Bottom Layer
+   Pad P1-103(64.96mm,13.314mm) on Bottom Layer
+   Pad P1-107(64.96mm,8.234mm) on Bottom Layer
+   Pad P1-105(64.96mm,10.774mm) on Bottom Layer
+   Pad P1-94(70.961mm,26.014mm) on Bottom Layer
+   Pad P1-74(70.96mm,51.414mm) on Bottom Layer
+   Pad P1-76(70.96mm,48.874mm) on Bottom Layer
+   Pad P1-78(70.96mm,46.334mm) on Bottom Layer
+   Pad P1-80(70.96mm,43.794mm) on Bottom Layer
+   Pad P1-82(70.961mm,41.254mm) on Bottom Layer
+   Pad P1-84(70.961mm,38.714mm) on Bottom Layer
+   Pad P1-86(70.961mm,36.174mm) on Bottom Layer
+   Pad P1-88(70.961mm,33.634mm) on Bottom Layer
+   Pad P1-90(70.961mm,31.094mm) on Bottom Layer
+   Pad P1-92(70.961mm,28.554mm) on Bottom Layer
+   Pad P1-96(70.961mm,23.474mm) on Bottom Layer
+   Pad P1-106(70.961mm,10.774mm) on Bottom Layer
+   Pad P1-100(70.961mm,18.394mm) on Bottom Layer
+   Pad P1-102(70.961mm,15.854mm) on Bottom Layer
+   Pad P1-104(70.961mm,13.314mm) on Bottom Layer
+   Pad P1-108(70.961mm,8.234mm) on Bottom Layer
+   Pad P1-98(70.961mm,20.934mm) on Bottom Layer
+   Pad P1-110(70.961mm,5.694mm) on Bottom Layer
+   Pad P1-77(64.96mm,46.334mm) on Bottom Layer
+   Pad P1-73(64.96mm,51.414mm) on Bottom Layer
+   Pad P1-81(64.96mm,41.254mm) on Bottom Layer
+   Pad P1-87(64.96mm,33.634mm) on Bottom Layer
+   Pad P1-89(64.96mm,31.094mm) on Bottom Layer
+   Pad P1-91(64.96mm,28.554mm) on Bottom Layer
+   Pad P1-93(64.96mm,26.014mm) on Bottom Layer
+   Pad P1-95(64.96mm,23.474mm) on Bottom Layer
+   Pad P1-97(64.96mm,20.934mm) on Bottom Layer
+   Pad P1-99(64.96mm,18.394mm) on Bottom Layer
+   Pad P1-101(64.96mm,15.854mm) on Bottom Layer
+   Pad P1-83(64.96mm,38.714mm) on Bottom Layer
+   Pad P1-75(64.96mm,48.874mm) on Bottom Layer
+   Pad P1-38(9.934mm,5.69mm) on Bottom Layer
+   Pad P1-37(3.934mm,5.69mm) on Bottom Layer
+   Pad P1-36(9.934mm,8.23mm) on Bottom Layer
+   Pad P1-35(3.934mm,8.23mm) on Bottom Layer
+   Pad P1-34(9.934mm,10.77mm) on Bottom Layer
+   Pad P1-33(3.934mm,10.77mm) on Bottom Layer
+   Pad P1-32(9.934mm,13.31mm) on Bottom Layer
+   Pad P1-31(3.934mm,13.31mm) on Bottom Layer
+   Pad P1-30(9.934mm,15.85mm) on Bottom Layer
+   Pad P1-29(3.934mm,15.85mm) on Bottom Layer
+   Pad P1-28(9.934mm,18.39mm) on Bottom Layer
+   Pad P1-27(3.934mm,18.39mm) on Bottom Layer
+   Pad P1-26(9.934mm,20.93mm) on Bottom Layer
+   Pad P1-25(3.934mm,20.93mm) on Bottom Layer
+   Pad P1-24(9.934mm,23.47mm) on Bottom Layer
+   Pad P1-23(3.934mm,23.47mm) on Bottom Layer
+   Pad P1-22(9.934mm,26.01mm) on Bottom Layer
+   Pad P1-21(3.934mm,26.01mm) on Bottom Layer
+   Pad P1-20(9.934mm,28.55mm) on Bottom Layer
+   Pad P1-19(3.934mm,28.55mm) on Bottom Layer
+   Pad P1-18(9.934mm,31.09mm) on Bottom Layer
+   Pad P1-17(3.934mm,31.09mm) on Bottom Layer
+   Pad P1-16(9.934mm,33.63mm) on Bottom Layer
+   Pad P1-15(3.934mm,33.63mm) on Bottom Layer
+   Pad P1-14(9.934mm,36.17mm) on Bottom Layer
+   Pad P1-13(3.934mm,36.17mm) on Bottom Layer
+   Pad P1-12(9.934mm,38.71mm) on Bottom Layer
+   Pad P1-11(3.934mm,38.71mm) on Bottom Layer
+   Pad P1-10(9.934mm,41.25mm) on Bottom Layer
+   Pad P1-9(3.934mm,41.25mm) on Bottom Layer
+   Pad P1-8(9.934mm,43.79mm) on Bottom Layer
+   Pad P1-7(3.934mm,43.79mm) on Bottom Layer
+   Pad P1-6(9.934mm,46.33mm) on Bottom Layer
+   Pad P1-5(3.934mm,46.33mm) on Bottom Layer
+   Pad P1-4(9.934mm,48.87mm) on Bottom Layer
+   Pad P1-3(3.934mm,48.87mm) on Bottom Layer
+   Pad P1-2(9.934mm,51.41mm) on Bottom Layer
+   Pad P1-1(3.934mm,51.41mm) on Bottom Layer
 
 Processing Rule : Clearance Constraint (Gap=0.3mm) (All),(All)
 Rule Violations :0
@@ -189,10 +189,10 @@ Processing Rule : Net Antennae (Tolerance=0mm) (All)
 Rule Violations :0
 
 Processing Rule : Component Clearance Constraint ( Horizontal Gap = 0.254mm, Vertical Gap = 0.254mm ) (All),(All) 
-   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (72.967mm,64.558mm) on Bottom Layer And DIP Component P3-PWM (70.383mm,60.376mm) on Top Layer 
-   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (72.967mm,64.558mm) on Bottom Layer And DIP Component P4-PWM (38.202mm,4.216mm) on Top Layer 
-   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (72.967mm,64.558mm) on Bottom Layer And SIP Component H1-HM-10 (21.768mm,19.228mm) on Top Layer 
-   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (72.967mm,64.558mm) on Bottom Layer And SIP Component P2-SBUSתTTL (52.07mm,28.067mm) on Top Layer 
+   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (73.979mm,63.775mm) on Bottom Layer And DIP Component P3-PWM (71.399mm,59.639mm) on Top Layer 
+   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (73.979mm,63.775mm) on Bottom Layer And DIP Component P4-PWM (39.218mm,3.48mm) on Top Layer 
+   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (73.979mm,63.775mm) on Bottom Layer And SIP Component H1-HM-10 (22.784mm,18.491mm) on Top Layer 
+   Violation between Component Clearance Constraint: (Collision < 0.254mm) Between Component P1-NUCLEO-64 (73.979mm,63.775mm) on Bottom Layer And SIP Component P2-SBUSתTTL (53.086mm,27.33mm) on Top Layer 
 Rule Violations :4
 
 Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
@@ -210,4 +210,4 @@ Rule Violations :0
 
 Violations Detected : 36
 Waived Violations : 0
-Time Elapsed        : 00:00:03
+Time Elapsed        : 00:00:02
