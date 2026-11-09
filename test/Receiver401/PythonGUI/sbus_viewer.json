@@ -1,0 +1,7 @@
+{
+  "port": "COM5 — STMicroelectronics STLink Virtual COM Port (COM5) · STMicroelectronics",
+  "baud": 115200,
+  "parity": "N",
+  "stop": "1",
+  "bits": "8"
+}
