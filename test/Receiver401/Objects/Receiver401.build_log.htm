@@ -27,16 +27,21 @@ Project File Date:  11/08/2026
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Software\Keil_v5\ARM\ARMCC\Bin'
 Rebuild target 'Target 1'
-assembling debug_uart.s...
-Code\debug_uart.s(369): warning: A1581W: Added 2 bytes of padding at address 0x176
 assembling start.s...
 Code\start.s(286): warning: A1581W: Added 2 bytes of padding at address 0x3e
+assembling debug_uart.s...
+Code\debug_uart.s(369): warning: A1581W: Added 2 bytes of padding at address 0x176
 assembling main.s...
-linking...
-.\Objects\Receiver401.sct(8): warning: L6314W: No section matches pattern *(InRoot$$Sections).
-Program Size: Code=1384 RO-data=416 RW-data=4 ZI-data=2236  
-Finished: 0 information, 1 warning and 0 error messages.
-".\Objects\Receiver401.axf" - 0 Error(s), 3 Warning(s).
+Code\main.s(74): error: A1163E: Unknown opcode rx_err_cnt , expecting opcode or Macro
+Code\main.s(75): error: A1163E: Unknown opcode frame_bad_cnt , expecting opcode or Macro
+Code\main.s(76): error: A1163E: Unknown opcode sbus_flags , expecting opcode or Macro
+Code\main.s(77): error: A1163E: Unknown opcode sbus_ch17 , expecting opcode or Macro
+Code\main.s(78): error: A1163E: Unknown opcode sbus_ch18 , expecting opcode or Macro
+Code\main.s(79): error: A1163E: Unknown opcode sbus_ok_cnt , expecting opcode or Macro
+Code\main.s(80): error: A1163E: Unknown opcode heartbeat , expecting opcode or Macro
+Code\main.s(81): error: A1163E: Unknown opcode data_ok , expecting opcode or Macro
+Code\main.s(96): error: A1163E: Unknown opcode sbus_magic , expecting opcode or Macro
+".\Objects\Receiver401.axf" - 9 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -48,7 +53,8 @@ Package Vendor: Keil
 <h2>Collection of Component include folders:</h2>
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Target not created.
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>
