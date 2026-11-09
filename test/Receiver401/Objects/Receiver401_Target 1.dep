@@ -1,0 +1,5 @@
+Dependencies for Project 'Receiver401', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
+F (.\Code\main.s)(0x6AF038F2)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__UVISION_VERSION SETA 540" --pd "STM32F401xE SETA 1"--list .\listings\main.lst --xref -o .\objects\main.o --depend .\objects\main.d)
+F (.\Code\start.s)(0x6AF038F2)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__UVISION_VERSION SETA 540" --pd "STM32F401xE SETA 1"--list .\listings\start.lst --xref -o .\objects\start.o --depend .\objects\start.d)
+F (.\Code\debug_uart.s)(0x6AF038F2)(--cpu Cortex-M4.fp.sp -g --apcs=interwork --pd "__UVISION_VERSION SETA 540" --pd "STM32F401xE SETA 1"--list .\listings\debug_uart.lst --xref -o .\objects\debug_uart.o --depend .\objects\debug_uart.d)

@@ -1,0 +1,904 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;=======================================================
+                       ==============
+    2 00000000         ;  start.s   ——   STM32F401RE 汇编启动文件（K
+                       eil MDK / armasm 语法）
+    3 00000000         ;
+    4 00000000         ;  职责（对应你文档"流程梳理"第 1 步）：
+                       
+    5 00000000         ;    1) 建立中断向量表：第 0 个字 = 栈顶初
+                       值，第 1 个字 = 复位入口，
+    6 00000000         ;       之后按中断号顺序排列各个异常/中�
+                       �服务函数的入口地址
+    7 00000000         ;    2) 把 .data 段（有初值的全局变量）从 F
+                       lash 拷贝到 SRAM
+    8 00000000         ;    3) 把 .bss / ZI 段（无初值的全局变量）�
+                       �� SRAM 里清零
+    9 00000000         ;    4) 设置 VTOR，跳到 main.s 的 asm_main
+   10 00000000         ;
+   11 00000000         ;  手册引用：
+   12 00000000         ;    RM0368 Rev6  = STM32F401xB/C xD/E Reference manual
+   13 00000000         ;    PM0214 Rev4  = STM32F3/F4 系列 Cortex-M4 内核�
+                       �程手册
+   14 00000000         ;  页码都是手册印刷页码，可直接翻到该�
+                       �核对。
+   15 00000000         ;=======================================================
+                       ==============
+   16 00000000         
+   17 00000000         ;-------------------------------------------------------
+                       --------------
+   18 00000000         ; 一、栈（Stack）
+   19 00000000         ;    Cortex-M4 的栈是"满递减"：SP 初值 = 栈区
+                       最高地址，压栈时 SP 先减。
+   20 00000000         ;    __initial_sp 这个标号写在 SPACE 之后，正�
+                       ��落在栈区末尾（最高地址）。
+   21 00000000         ;-------------------------------------------------------
+                       --------------
+   22 00000000 00000800 
+                       Stack_Size
+                               EQU              0x00000800  ; 2 KB
+   23 00000000         
+   24 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
+=3
+   25 00000000         Stack_Mem
+                               SPACE            Stack_Size
+   26 00000800         __initial_sp                         ; ← 这就是向�
+                                                            ��表第 0 个字
+   27 00000800         
+   28 00000800         ;-------------------------------------------------------
+                       --------------
+   29 00000800         ; 二、中断向量表
+   30 00000800         ;    PM0214 P39  Figure 11：向量表结构
+   31 00000800         ;      0x00 : 初始 SP
+   32 00000800         ;      0x04 : Reset
+   33 00000800         ;      0x08 : NMI         0x0C : HardFault
+   34 00000800         ;      0x10 : MemManage   0x14 : BusFault    0x18 : Usag
+                       eFault
+   35 00000800         ;      0x2C : SVCall      0x38 : PendSV      0x3C : SysT
+                       ick
+   36 00000800         ;      0x40 : IRQ0 ...    每个 IRQ 占 4 字节
+   37 00000800         ;    公式：  IRQn 的向量地址 = 0x40 + 4 × n
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   38 00000800         ;            USART2 是 IRQ38  →  0x40 + 4×38 = 0xD8
+   39 00000800         ;            （RM0368 P204  Table 38 给出了每个 IR
+                       Q 的编号和地址）
+   40 00000800         ;
+   41 00000800         ;    注意：这里填的必须是"函数标号"，且�
+                       ��函数必须存在于工程里，
+   42 00000800         ;          否则链接报 undefined symbol。没实现�
+                       ��统一指向 Default_Handler。
+   43 00000800         ;-------------------------------------------------------
+                       --------------
+   44 00000800                 AREA             RESET, DATA, READONLY, ALIGN=4
+   45 00000000                 EXPORT           __Vectors
+   46 00000000                 EXPORT           __Vectors_End
+   47 00000000                 EXPORT           __Vectors_Size
+   48 00000000         
+   49 00000000 00000000 
+                       __Vectors
+                               DCD              __initial_sp ; 0x00 初始 SP
+   50 00000004 00000000        DCD              Reset_Handler ; 0x04 Reset
+   51 00000008 00000000        DCD              NMI_Handler ; 0x08
+   52 0000000C 00000000        DCD              HardFault_Handler ; 0x0C
+   53 00000010 00000000        DCD              MemManage_Handler ; 0x10
+   54 00000014 00000000        DCD              BusFault_Handler ; 0x14
+   55 00000018 00000000        DCD              UsageFault_Handler ; 0x18
+   56 0000001C 00000000        DCD              0           ; 0x1C 保留
+   57 00000020 00000000        DCD              0           ; 0x20 保留
+   58 00000024 00000000        DCD              0           ; 0x24 保留
+   59 00000028 00000000        DCD              0           ; 0x28 保留
+   60 0000002C 00000000        DCD              SVC_Handler ; 0x2C
+   61 00000030 00000000        DCD              DebugMon_Handler ; 0x30
+   62 00000034 00000000        DCD              0           ; 0x34 保留
+   63 00000038 00000000        DCD              PendSV_Handler ; 0x38
+   64 0000003C 00000000        DCD              SysTick_Handler ; 0x3C
+   65 00000040         ;---------------------- 外部中断 IRQ0 ~ IRQ84 ------
+                       ------------------
+   66 00000040 00000000        DCD              Default_Handler 
+                                                            ; 0x40 IRQ0  WWDG
+   67 00000044 00000000        DCD              Default_Handler ; 0x44 IRQ1  PV
+                                                            D(EXTI16)
+   68 00000048 00000000        DCD              Default_Handler ; 0x48 IRQ2  TA
+                                                            MP_STAMP(EXTI21)
+   69 0000004C 00000000        DCD              Default_Handler ; 0x4C IRQ3  RT
+                                                            C_WKUP(EXTI22)
+   70 00000050 00000000        DCD              Default_Handler 
+                                                            ; 0x50 IRQ4  FLASH
+   71 00000054 00000000        DCD              Default_Handler 
+                                                            ; 0x54 IRQ5  RCC
+   72 00000058 00000000        DCD              Default_Handler 
+                                                            ; 0x58 IRQ6  EXTI0
+   73 0000005C 00000000        DCD              Default_Handler 
+                                                            ; 0x5C IRQ7  EXTI1
+   74 00000060 00000000        DCD              Default_Handler 
+                                                            ; 0x60 IRQ8  EXTI2
+   75 00000064 00000000        DCD              Default_Handler 
+                                                            ; 0x64 IRQ9  EXTI3
+   76 00000068 00000000        DCD              Default_Handler 
+                                                            ; 0x68 IRQ10 EXTI4
+   77 0000006C 00000000        DCD              Default_Handler ; 0x6C IRQ11 DM
+                                                            A1_Stream0
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+   78 00000070 00000000        DCD              Default_Handler ; 0x70 IRQ12 DM
+                                                            A1_Stream1
+   79 00000074 00000000        DCD              Default_Handler ; 0x74 IRQ13 DM
+                                                            A1_Stream2
+   80 00000078 00000000        DCD              Default_Handler ; 0x78 IRQ14 DM
+                                                            A1_Stream3
+   81 0000007C 00000000        DCD              Default_Handler ; 0x7C IRQ15 DM
+                                                            A1_Stream4
+   82 00000080 00000000        DCD              Default_Handler ; 0x80 IRQ16 DM
+                                                            A1_Stream5
+   83 00000084 00000000        DCD              Default_Handler ; 0x84 IRQ17 DM
+                                                            A1_Stream6
+   84 00000088 00000000        DCD              Default_Handler 
+                                                            ; 0x88 IRQ18 ADC
+   85 0000008C 00000000        DCD              0           ; 0x8C IRQ19 保留
+                                                            
+   86 00000090 00000000        DCD              0           ; 0x90 IRQ20 保留
+                                                            
+   87 00000094 00000000        DCD              0           ; 0x94 IRQ21 保留
+                                                            
+   88 00000098 00000000        DCD              0           ; 0x98 IRQ22 保留
+                                                            
+   89 0000009C 00000000        DCD              Default_Handler ; 0x9C IRQ23 EX
+                                                            TI9_5
+   90 000000A0 00000000        DCD              Default_Handler ; 0xA0 IRQ24 TI
+                                                            M1_BRK_TIM9
+   91 000000A4 00000000        DCD              Default_Handler ; 0xA4 IRQ25 TI
+                                                            M1_UP_TIM10
+   92 000000A8 00000000        DCD              Default_Handler ; 0xA8 IRQ26 TI
+                                                            M1_TRG_COM_TIM11
+   93 000000AC 00000000        DCD              Default_Handler ; 0xAC IRQ27 TI
+                                                            M1_CC
+   94 000000B0 00000000        DCD              Default_Handler 
+                                                            ; 0xB0 IRQ28 TIM2
+   95 000000B4 00000000        DCD              Default_Handler 
+                                                            ; 0xB4 IRQ29 TIM3
+   96 000000B8 00000000        DCD              Default_Handler 
+                                                            ; 0xB8 IRQ30 TIM4
+   97 000000BC 00000000        DCD              Default_Handler ; 0xBC IRQ31 I2
+                                                            C1_EV
+   98 000000C0 00000000        DCD              Default_Handler ; 0xC0 IRQ32 I2
+                                                            C1_ER
+   99 000000C4 00000000        DCD              Default_Handler ; 0xC4 IRQ33 I2
+                                                            C2_EV
+  100 000000C8 00000000        DCD              Default_Handler ; 0xC8 IRQ34 I2
+                                                            C2_ER
+  101 000000CC 00000000        DCD              Default_Handler 
+                                                            ; 0xCC IRQ35 SPI1
+  102 000000D0 00000000        DCD              Default_Handler 
+                                                            ; 0xD0 IRQ36 SPI2
+  103 000000D4 00000000        DCD              Default_Handler 
+                                                            ; 0xD4 IRQ37 USART1
+                                                            
+  104 000000D8 00000000        DCD              USART2_IRQHandler ; 0xD8 IRQ38 
+                                                            USART2（现在只�
+                                                            ��发送，不用�
+                                                            �断）
+  105 000000DC 00000000        DCD              0           ; 0xDC IRQ39 保留
+                                                            
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  106 000000E0 00000000        DCD              Default_Handler ; 0xE0 IRQ40 EX
+                                                            TI15_10
+  107 000000E4 00000000        DCD              Default_Handler ; 0xE4 IRQ41 RT
+                                                            C_Alarm(EXTI17)
+  108 000000E8 00000000        DCD              Default_Handler ; 0xE8 IRQ42 OT
+                                                            G_FS_WKUP(EXTI18)
+  109 000000EC 00000000        DCD              0           ; 0xEC IRQ43 保留
+                                                            
+  110 000000F0 00000000        DCD              0           ; 0xF0 IRQ44 保留
+                                                            
+  111 000000F4 00000000        DCD              0           ; 0xF4 IRQ45 保留
+                                                            
+  112 000000F8 00000000        DCD              0           ; 0xF8 IRQ46 保留
+                                                            
+  113 000000FC 00000000        DCD              Default_Handler ; 0xFC IRQ47 DM
+                                                            A1_Stream7
+  114 00000100 00000000        DCD              0           ; 0x100 IRQ48 保�
+                                                            �
+  115 00000104 00000000        DCD              Default_Handler 
+                                                            ; 0x104 IRQ49 SDIO
+  116 00000108 00000000        DCD              Default_Handler 
+                                                            ; 0x108 IRQ50 TIM5
+  117 0000010C 00000000        DCD              Default_Handler 
+                                                            ; 0x10C IRQ51 SPI3
+  118 00000110 00000000        DCD              0           ; 0x110 IRQ52 保�
+                                                            �
+  119 00000114 00000000        DCD              0           ; 0x114 IRQ53 保�
+                                                            �
+  120 00000118 00000000        DCD              0           ; 0x118 IRQ54 保�
+                                                            �
+  121 0000011C 00000000        DCD              0           ; 0x11C IRQ55 保�
+                                                            �
+  122 00000120 00000000        DCD              Default_Handler ; 0x120 IRQ56 D
+                                                            MA2_Stream0
+  123 00000124 00000000        DCD              Default_Handler ; 0x124 IRQ57 D
+                                                            MA2_Stream1
+  124 00000128 00000000        DCD              Default_Handler ; 0x128 IRQ58 D
+                                                            MA2_Stream2
+  125 0000012C 00000000        DCD              Default_Handler ; 0x12C IRQ59 D
+                                                            MA2_Stream3
+  126 00000130 00000000        DCD              Default_Handler ; 0x130 IRQ60 D
+                                                            MA2_Stream4
+  127 00000134 00000000        DCD              0           ; 0x134 IRQ61 保�
+                                                            �
+  128 00000138 00000000        DCD              0           ; 0x138 IRQ62 保�
+                                                            �
+  129 0000013C 00000000        DCD              0           ; 0x13C IRQ63 保�
+                                                            �
+  130 00000140 00000000        DCD              0           ; 0x140 IRQ64 保�
+                                                            �
+  131 00000144 00000000        DCD              0           ; 0x144 IRQ65 保�
+                                                            �
+  132 00000148 00000000        DCD              0           ; 0x148 IRQ66 保�
+                                                            �
+  133 0000014C 00000000        DCD              Default_Handler ; 0x14C IRQ67 O
+                                                            TG_FS
+  134 00000150 00000000        DCD              Default_Handler ; 0x150 IRQ68 D
+                                                            MA2_Stream5
+  135 00000154 00000000        DCD              Default_Handler ; 0x154 IRQ69 D
+
+
+
+ARM Macro Assembler    Page 5 
+
+
+                                                            MA2_Stream6
+  136 00000158 00000000        DCD              Default_Handler ; 0x158 IRQ70 D
+                                                            MA2_Stream7
+  137 0000015C 00000000        DCD              USART6_IRQHandler ; 0x15C IRQ71
+                                                             USART6 ★SBUS 接
+                                                            收用这个
+  138 00000160 00000000        DCD              Default_Handler ; 0x160 IRQ72 I
+                                                            2C3_EV
+  139 00000164 00000000        DCD              Default_Handler ; 0x164 IRQ73 I
+                                                            2C3_ER
+  140 00000168 00000000        DCD              0           ; 0x168 IRQ74 保�
+                                                            �
+  141 0000016C 00000000        DCD              0           ; 0x16C IRQ75 保�
+                                                            �
+  142 00000170 00000000        DCD              0           ; 0x170 IRQ76 保�
+                                                            �
+  143 00000174 00000000        DCD              0           ; 0x174 IRQ77 保�
+                                                            �
+  144 00000178 00000000        DCD              0           ; 0x178 IRQ78 保�
+                                                            �
+  145 0000017C 00000000        DCD              0           ; 0x17C IRQ79 保�
+                                                            �
+  146 00000180 00000000        DCD              0           ; 0x180 IRQ80 保�
+                                                            �
+  147 00000184 00000000        DCD              Default_Handler 
+                                                            ; 0x184 IRQ81 FPU
+  148 00000188 00000000        DCD              0           ; 0x188 IRQ82 保�
+                                                            �
+  149 0000018C 00000000        DCD              0           ; 0x18C IRQ83 保�
+                                                            �
+  150 00000190 00000000        DCD              Default_Handler 
+                                                            ; 0x190 IRQ84 SPI4
+  151 00000194         __Vectors_End
+  152 00000194         
+  153 00000194 00000194 
+                       __Vectors_Size
+                               EQU              __Vectors_End - __Vectors
+  154 00000194         
+  155 00000194         ;-------------------------------------------------------
+                       --------------
+  156 00000194         ; 三、复位入口
+  157 00000194         ;    PM0214 P41："On reset, the processor ... loads the
+                        PC with the
+  158 00000194         ;    reset vector"；RM0368 P41 §2.4 也说明了 BOOT0
+                       =0 时从 Flash 启动。
+  159 00000194         ;-------------------------------------------------------
+                       --------------
+  160 00000194                 AREA             |.text|, CODE, READONLY, ALIGN=
+4
+  161 00000000                 PRESERVE8
+  162 00000000                 THUMB
+  163 00000000         
+  164 00000000         ;-------------------------------------------------------
+                       --------------
+  165 00000000         ; ENTRY：告诉链接器"入口是 Reset_Handler"。
+  166 00000000         ;   写上它可以让映像的入口点明确，配合�
+                       ��程里的 --entry=Reset_Handler
+  167 00000000         ;   双保险。（注意：光靠它并不能阻止链�
+                       ��器去拉 C 库，真正的原因见
+
+
+
+ARM Macro Assembler    Page 6 
+
+
+  168 00000000         ;   下面 IMPORT asm_main 上面的说明。）
+  169 00000000         ;-------------------------------------------------------
+                       --------------
+  170 00000000                 ENTRY
+  171 00000000         
+  172 00000000                 EXPORT           Reset_Handler
+  173 00000000         ;-------------------------------------------------------
+                       --------------
+  174 00000000         ; ★ 入口函数叫 asm_main，不叫 main —— 这�
+                       ��有原因的，别改回去！
+  175 00000000         ;
+  176 00000000         ;   ARMCC/armlink 有一个"贴心"行为：只要映像
+                       里存在名为 main 的符号，
+  177 00000000         ;   链接器就会自动 "Adding startup reference: __m
+                       ain"，把 C 库的
+  178 00000000         ;   启动代码（__rt_entry / __scatterload / 半主�
+                       � __user_initial_stackheap）
+  179 00000000         ;   一起拉进来。而半主机版的 __user_initial_
+                       stackheap 在 scatter 分散
+  180 00000000         ;   加载模式下无法确定堆区，于是报：
+  181 00000000         ;     L6915E: Library reports error: The semihosting
+  182 00000000         ;     __user_initial_stackheap cannot reliably set up a 
+                       usable heap
+  183 00000000         ;     region if scatter loading is in use
+  184 00000000         ;   这个行为与 --entry=Reset_Handler 无关（加�
+                       �也一样），唯一的办法
+  185 00000000         ;   就是不要用 main 这个名字。asmLight 那份�
+                       ��程叫 asm_main 正是这个道理。
+  186 00000000         ;-------------------------------------------------------
+                       --------------
+  187 00000000                 IMPORT           asm_main
+  188 00000000         
+  189 00000000         ; 下面 4 个是 armlink 按 scatter 文件里的区域
+                       名自动生成的符号，
+  190 00000000         ; 用来告诉我们各段在 Flash / SRAM 中的实际�
+                       ��止地址。
+  191 00000000         ; 官方默认 scatter（uVision "Use Memory Layout from
+                        Target Dialog"）里
+  192 00000000         ; 区域名就是 ER_IROM1 和 RW_IRAM1，与你 asmLigh
+                       t 工程的 .sct 一致。
+  193 00000000                 IMPORT           |Image$$ER_IROM1$$RO$$Limit| ; 
+                                                            RO 段末尾 = .dat
+                                                            a 初值在 Flash �
+                                                            ��起始
+  194 00000000                 IMPORT           |Image$$RW_IRAM1$$RW$$Base| ; .
+                                                            data 在 SRAM 的�
+                                                            �始
+  195 00000000                 IMPORT           |Image$$RW_IRAM1$$ZI$$Base| ; .
+                                                            bss(ZI) 起始（�
+                                                            �是 .data 的结�
+                                                            �）
+  196 00000000                 IMPORT           |Image$$RW_IRAM1$$ZI$$Limit| 
+                                                            ; .bss(ZI) 结束
+  197 00000000         
+  198 00000000         Reset_Handler
+  199 00000000         ;-------------------------------------------------------
+                       --------------
+  200 00000000         ; 3.1  拷贝 .data：Flash(初值) → SRAM(变量实�
+                       �)
+
+
+
+ARM Macro Assembler    Page 7 
+
+
+  201 00000000         ;      源: Image$$ER_IROM1$$RO$$Limit
+  202 00000000         ;      目的: Image$$RW_IRAM1$$RW$$Base  ~  Image$$RW_I
+                       RAM1$$ZI$$Base
+  203 00000000         ;-------------------------------------------------------
+                       --------------
+  204 00000000 480F            LDR              R0, =|Image$$ER_IROM1$$RO$$Limi
+t|
+  205 00000002 4910            LDR              R1, =|Image$$RW_IRAM1$$RW$$Base
+|
+  206 00000004 4A10            LDR              R2, =|Image$$RW_IRAM1$$ZI$$Base
+|
+  207 00000006         Copy_Data
+  208 00000006 4291            CMP              R1, R2
+  209 00000008 D004            BEQ              Copy_Data_End
+  210 0000000A F850 3B04       LDR              R3, [R0], #4 ; 从 Flash 取一
+                                                            个字，指针 +4
+  211 0000000E F841 3B04       STR              R3, [R1], #4 ; 写进 SRAM，�
+                                                            �针 +4
+  212 00000012 E7F8            B                Copy_Data
+  213 00000014         Copy_Data_End
+  214 00000014         
+  215 00000014         ;-------------------------------------------------------
+                       --------------
+  216 00000014         ; 3.2  .bss(ZI) 清零
+  217 00000014         ;      范围: Image$$RW_IRAM1$$ZI$$Base ~ Image$$RW_IRA
+                       M1$$ZI$$Limit
+  218 00000014         ;      你文档里 rx_buf / frame_buf / channels 这些
+                       缓冲区都在这里，
+  219 00000014         ;      不清零的话上电后它们是随机值，状�
+                       ��机会瞎跑。
+  220 00000014         ;-------------------------------------------------------
+                       --------------
+  221 00000014 490C            LDR              R1, =|Image$$RW_IRAM1$$ZI$$Base
+|
+  222 00000016 4A0D            LDR              R2, =|Image$$RW_IRAM1$$ZI$$Limi
+t|
+  223 00000018 F04F 0300       MOV              R3, #0
+  224 0000001C         Zero_Bss
+  225 0000001C 4291            CMP              R1, R2
+  226 0000001E D002            BEQ              Zero_Bss_End
+  227 00000020 F841 3B04       STR              R3, [R1], #4
+  228 00000024 E7FA            B                Zero_Bss
+  229 00000026         Zero_Bss_End
+  230 00000026         
+  231 00000026         ;-------------------------------------------------------
+                       --------------
+  232 00000026         ; 3.3  重定位向量表
+  233 00000026         ;      PM0214 P212 VTOR(0xE000ED08)。复位后 VTOR=0�
+                       �Flash 被别名到
+  234 00000026         ;      0x00000000 所以也能正常工作；显式写�
+                       �遍，将来搬到 SRAM 跑也不用改。
+  235 00000026         ;-------------------------------------------------------
+                       --------------
+  236 00000026 480A            LDR              R0, =0xE000ED08
+  237 00000028 F04F 6100       LDR              R1, =0x08000000
+  238 0000002C 6001            STR              R1, [R0]
+  239 0000002E F3BF 8F4F       DSB
+  240 00000032 F3BF 8F6F       ISB
+  241 00000036         
+
+
+
+ARM Macro Assembler    Page 8 
+
+
+  242 00000036         ;-------------------------------------------------------
+                       --------------
+  243 00000036         ; 3.4  进入 asm_main（main.s）
+  244 00000036         ;-------------------------------------------------------
+                       --------------
+  245 00000036 4807            LDR              R0, =asm_main
+  246 00000038 4700            BX               R0
+  247 0000003A         
+  248 0000003A         ;-------------------------------------------------------
+                       --------------
+  249 0000003A         ; 四、默认中断处理
+  250 0000003A         ;    未实现的中断都落到这里。这里故意写
+                       成死循环而不是直接返回：
+  251 0000003A         ;    真进了不该进的中断，停下来比"带病�
+                       �续跑"更容易定位问题。
+  252 0000003A         ;-------------------------------------------------------
+                       --------------
+  253 0000003A         Default_Handler
+  254 0000003A E7FE            B                Default_Handler
+  255 0000003C         
+  256 0000003C         ;-------------------------------------------------------
+                       --------------
+  257 0000003C         ; 五、弱定义（[WEAK]）
+  258 0000003C         ;    这里先给一个空实现，main.s 里若用 EXPO
+                       RT 定义了同名函数，
+  259 0000003C         ;    链接器会自动改用 main.s 的强定义，不�
+                       ��回来改向量表。
+  260 0000003C         ;-------------------------------------------------------
+                       --------------
+  261 0000003C                 EXPORT           NMI_Handler             [WEAK]
+  262 0000003C                 EXPORT           HardFault_Handler       [WEAK]
+  263 0000003C                 EXPORT           MemManage_Handler       [WEAK]
+  264 0000003C                 EXPORT           BusFault_Handler        [WEAK]
+  265 0000003C                 EXPORT           UsageFault_Handler      [WEAK]
+  266 0000003C                 EXPORT           SVC_Handler             [WEAK]
+  267 0000003C                 EXPORT           DebugMon_Handler        [WEAK]
+  268 0000003C                 EXPORT           PendSV_Handler          [WEAK]
+  269 0000003C                 EXPORT           SysTick_Handler         [WEAK]
+  270 0000003C                 EXPORT           USART2_IRQHandler       [WEAK]
+  271 0000003C                 EXPORT           USART6_IRQHandler       [WEAK]
+  272 0000003C         
+  273 0000003C         NMI_Handler
+  274 0000003C         HardFault_Handler
+  275 0000003C         MemManage_Handler
+  276 0000003C         BusFault_Handler
+  277 0000003C         UsageFault_Handler
+  278 0000003C         SVC_Handler
+  279 0000003C         DebugMon_Handler
+  280 0000003C         PendSV_Handler
+  281 0000003C         SysTick_Handler
+  282 0000003C         USART2_IRQHandler
+  283 0000003C         USART6_IRQHandler
+  284 0000003C E7FD            B                Default_Handler
+  285 0000003E         
+  286 0000003E                 END
+              00 00 00000000 
+              00000000 
+              00000000 
+              00000000 
+
+
+
+ARM Macro Assembler    Page 9 
+
+
+              E000ED08 
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
+interwork --depend=.\objects\start.d -o.\objects\start.o --predefine="__UVISION
+_VERSION SETA 540" --predefine="STM32F401xE SETA 1" --list=.\listings\start.lst
+ Code\start.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+STACK 00000000
+
+Symbol: STACK
+   Definitions
+      At line 24 in file Code\start.s
+   Uses
+      None
+Comment: STACK unused
+Stack_Mem 00000000
+
+Symbol: Stack_Mem
+   Definitions
+      At line 25 in file Code\start.s
+   Uses
+      None
+Comment: Stack_Mem unused
+__initial_sp 00000800
+
+Symbol: __initial_sp
+   Definitions
+      At line 26 in file Code\start.s
+   Uses
+      At line 49 in file Code\start.s
+Comment: __initial_sp used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 44 in file Code\start.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 49 in file Code\start.s
+   Uses
+      At line 45 in file Code\start.s
+      At line 153 in file Code\start.s
+
+__Vectors_End 00000194
+
+Symbol: __Vectors_End
+   Definitions
+      At line 151 in file Code\start.s
+   Uses
+      At line 46 in file Code\start.s
+      At line 153 in file Code\start.s
+
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 160 in file Code\start.s
+   Uses
+      None
+Comment: .text unused
+BusFault_Handler 0000003C
+
+Symbol: BusFault_Handler
+   Definitions
+      At line 276 in file Code\start.s
+   Uses
+      At line 54 in file Code\start.s
+      At line 264 in file Code\start.s
+
+Copy_Data 00000006
+
+Symbol: Copy_Data
+   Definitions
+      At line 207 in file Code\start.s
+   Uses
+      At line 212 in file Code\start.s
+Comment: Copy_Data used once
+Copy_Data_End 00000014
+
+Symbol: Copy_Data_End
+   Definitions
+      At line 213 in file Code\start.s
+   Uses
+      At line 209 in file Code\start.s
+Comment: Copy_Data_End used once
+DebugMon_Handler 0000003C
+
+Symbol: DebugMon_Handler
+   Definitions
+      At line 279 in file Code\start.s
+   Uses
+      At line 61 in file Code\start.s
+      At line 267 in file Code\start.s
+
+Default_Handler 0000003A
+
+Symbol: Default_Handler
+   Definitions
+      At line 253 in file Code\start.s
+   Uses
+      At line 66 in file Code\start.s
+      At line 67 in file Code\start.s
+      At line 68 in file Code\start.s
+      At line 69 in file Code\start.s
+      At line 70 in file Code\start.s
+      At line 71 in file Code\start.s
+      At line 72 in file Code\start.s
+      At line 73 in file Code\start.s
+      At line 74 in file Code\start.s
+      At line 75 in file Code\start.s
+      At line 76 in file Code\start.s
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 77 in file Code\start.s
+      At line 78 in file Code\start.s
+      At line 79 in file Code\start.s
+      At line 80 in file Code\start.s
+      At line 81 in file Code\start.s
+      At line 82 in file Code\start.s
+      At line 83 in file Code\start.s
+      At line 84 in file Code\start.s
+      At line 89 in file Code\start.s
+      At line 90 in file Code\start.s
+      At line 91 in file Code\start.s
+      At line 92 in file Code\start.s
+      At line 93 in file Code\start.s
+      At line 94 in file Code\start.s
+      At line 95 in file Code\start.s
+      At line 96 in file Code\start.s
+      At line 97 in file Code\start.s
+      At line 98 in file Code\start.s
+      At line 99 in file Code\start.s
+      At line 100 in file Code\start.s
+      At line 101 in file Code\start.s
+      At line 102 in file Code\start.s
+      At line 103 in file Code\start.s
+      At line 106 in file Code\start.s
+      At line 107 in file Code\start.s
+      At line 108 in file Code\start.s
+      At line 113 in file Code\start.s
+      At line 115 in file Code\start.s
+      At line 116 in file Code\start.s
+      At line 117 in file Code\start.s
+      At line 122 in file Code\start.s
+      At line 123 in file Code\start.s
+      At line 124 in file Code\start.s
+      At line 125 in file Code\start.s
+      At line 126 in file Code\start.s
+      At line 133 in file Code\start.s
+      At line 134 in file Code\start.s
+      At line 135 in file Code\start.s
+      At line 136 in file Code\start.s
+      At line 138 in file Code\start.s
+      At line 139 in file Code\start.s
+      At line 147 in file Code\start.s
+      At line 150 in file Code\start.s
+      At line 254 in file Code\start.s
+      At line 284 in file Code\start.s
+
+HardFault_Handler 0000003C
+
+Symbol: HardFault_Handler
+   Definitions
+      At line 274 in file Code\start.s
+   Uses
+      At line 52 in file Code\start.s
+      At line 262 in file Code\start.s
+
+MemManage_Handler 0000003C
+
+Symbol: MemManage_Handler
+   Definitions
+
+
+
+ARM Macro Assembler    Page 3 Alphabetic symbol ordering
+Relocatable symbols
+
+      At line 275 in file Code\start.s
+   Uses
+      At line 53 in file Code\start.s
+      At line 263 in file Code\start.s
+
+NMI_Handler 0000003C
+
+Symbol: NMI_Handler
+   Definitions
+      At line 273 in file Code\start.s
+   Uses
+      At line 51 in file Code\start.s
+      At line 261 in file Code\start.s
+
+PendSV_Handler 0000003C
+
+Symbol: PendSV_Handler
+   Definitions
+      At line 280 in file Code\start.s
+   Uses
+      At line 63 in file Code\start.s
+      At line 268 in file Code\start.s
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 198 in file Code\start.s
+   Uses
+      At line 50 in file Code\start.s
+      At line 172 in file Code\start.s
+
+SVC_Handler 0000003C
+
+Symbol: SVC_Handler
+   Definitions
+      At line 278 in file Code\start.s
+   Uses
+      At line 60 in file Code\start.s
+      At line 266 in file Code\start.s
+
+SysTick_Handler 0000003C
+
+Symbol: SysTick_Handler
+   Definitions
+      At line 281 in file Code\start.s
+   Uses
+      At line 64 in file Code\start.s
+      At line 269 in file Code\start.s
+
+USART2_IRQHandler 0000003C
+
+Symbol: USART2_IRQHandler
+   Definitions
+      At line 282 in file Code\start.s
+   Uses
+      At line 104 in file Code\start.s
+      At line 270 in file Code\start.s
+
+
+
+
+ARM Macro Assembler    Page 4 Alphabetic symbol ordering
+Relocatable symbols
+
+USART6_IRQHandler 0000003C
+
+Symbol: USART6_IRQHandler
+   Definitions
+      At line 283 in file Code\start.s
+   Uses
+      At line 137 in file Code\start.s
+      At line 271 in file Code\start.s
+
+UsageFault_Handler 0000003C
+
+Symbol: UsageFault_Handler
+   Definitions
+      At line 277 in file Code\start.s
+   Uses
+      At line 55 in file Code\start.s
+      At line 265 in file Code\start.s
+
+Zero_Bss 0000001C
+
+Symbol: Zero_Bss
+   Definitions
+      At line 224 in file Code\start.s
+   Uses
+      At line 228 in file Code\start.s
+Comment: Zero_Bss used once
+Zero_Bss_End 00000026
+
+Symbol: Zero_Bss_End
+   Definitions
+      At line 229 in file Code\start.s
+   Uses
+      At line 226 in file Code\start.s
+Comment: Zero_Bss_End used once
+18 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+Stack_Size 00000800
+
+Symbol: Stack_Size
+   Definitions
+      At line 22 in file Code\start.s
+   Uses
+      At line 25 in file Code\start.s
+Comment: Stack_Size used once
+__Vectors_Size 00000194
+
+Symbol: __Vectors_Size
+   Definitions
+      At line 153 in file Code\start.s
+   Uses
+      At line 47 in file Code\start.s
+Comment: __Vectors_Size used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+Image$$ER_IROM1$$RO$$Limit 00000000
+
+Symbol: Image$$ER_IROM1$$RO$$Limit
+   Definitions
+      At line 193 in file Code\start.s
+   Uses
+      At line 204 in file Code\start.s
+Comment: Image$$ER_IROM1$$RO$$Limit used once
+Image$$RW_IRAM1$$RW$$Base 00000000
+
+Symbol: Image$$RW_IRAM1$$RW$$Base
+   Definitions
+      At line 194 in file Code\start.s
+   Uses
+      At line 205 in file Code\start.s
+Comment: Image$$RW_IRAM1$$RW$$Base used once
+Image$$RW_IRAM1$$ZI$$Base 00000000
+
+Symbol: Image$$RW_IRAM1$$ZI$$Base
+   Definitions
+      At line 195 in file Code\start.s
+   Uses
+      At line 206 in file Code\start.s
+      At line 221 in file Code\start.s
+
+Image$$RW_IRAM1$$ZI$$Limit 00000000
+
+Symbol: Image$$RW_IRAM1$$ZI$$Limit
+   Definitions
+      At line 196 in file Code\start.s
+   Uses
+      At line 222 in file Code\start.s
+Comment: Image$$RW_IRAM1$$ZI$$Limit used once
+asm_main 00000000
+
+Symbol: asm_main
+   Definitions
+      At line 187 in file Code\start.s
+   Uses
+      At line 245 in file Code\start.s
+Comment: asm_main used once
+5 symbols
+366 symbols in table
